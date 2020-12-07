@@ -10,7 +10,7 @@ class MyFirstGUI:
     def __init__(self, master, dataframe):
         self.master = master
 
-        master.title("EUROFUSION pedestal database plotting tool")
+        master.title("EUROFUSION pedestal database filtering and plotting tool")
         with open('./filter_parameter.json', 'r') as read_file:
             filter_list = json.load(read_file)
 
@@ -21,8 +21,10 @@ class MyFirstGUI:
         column_no = 0
         row_no = 0
         row_no_flag = 0
+
+        # what column and row to start the flags
         self.row_no_flag=0
-        column_no_flag = 5
+        self.column_no_flag = 5
 
         for filter in filter_list.keys():
             print(filter_list.keys())
@@ -136,15 +138,21 @@ class MyFirstGUI:
         setattr(self,obj, Checkbutton(master, text=filter_data["label_name"], variable=var1, onvalue=1, offvalue=0))
         checkbox = getattr(self,obj)
         checkbox.var = var1
-
-        if filter_data["var_type"] == "flag":
-            print(filter_data["var_type"])
-            # place on the right of screen
-            checkbox.grid(row=row_no, column=max(column_no), sticky='NSEW',padx=10,pady=10)
-            # row_no_flag += 1
-            # return row_no_flag
+        print(filter_data)
+        if filter_data["var_type"] == 'flag':
+            print(filter_data)
+            checkbox.grid(row=self.row_no_flag, column=self.column_no_flag, sticky='NSEW',padx=10,pady=10)
+            self.row_no_flag += 1
         else:
             checkbox.grid(row=row_no, column=column_no, sticky='NSEW',padx=10,pady=10)
+        # if filter_data["var_type"] == "flag":
+        #     print(filter_data["var_type"])
+        #     # place on the right of screen
+        #     checkbox.grid(row=row_no, column=max(column_no), sticky='NSEW',padx=10,pady=10)
+        #     # row_no_flag += 1
+        #     # return row_no_flag
+        # else:
+        #     checkbox.grid(row=row_no, column=column_no, sticky='NSEW',padx=10,pady=10)
 
 
 

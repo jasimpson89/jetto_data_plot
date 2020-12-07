@@ -1,0 +1,26 @@
+{
+  "Ip": {
+    "var_type": "min_max",
+    "label_name": "Plasma Current (MA)"
+  },
+  "Bt": {
+    "var_type": "min_max",
+    "label_name": "Toroidal field"
+  },
+  "triangularity": {
+    "var_type": "min_max",
+    "label_name": "Triangularity"
+  },
+  "pnbi": {
+    "var_type": "min_max",
+    "label_name": "P_nbi (MW)"
+  },
+  "ptot": {
+    "var_type": "min_max",
+    "label_name": "P_tot (MW)"
+  },
+  "FLAG: DEUTERIUM": {
+    "var_type": "flag",
+    "label_name": "FLAG: DEUTERIUM"
+  }
+}

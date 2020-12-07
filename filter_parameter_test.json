@@ -19,8 +19,16 @@
     "var_type": "min_max",
     "label_name": "P_tot (MW)"
   },
-  "FLAG: DEUTERIUM": {
+ "FLAG: DEUTERIUM": {
     "var_type": "flag",
     "label_name": "FLAG: DEUTERIUM"
+  },
+  "FLAG: HYDROGEN": {
+    "var_type": "flag",
+    "label_name": "P_tot (MW)"
+  },
+  "FLAG: H/D mix": {
+    "var_type": "flag",
+    "label_name": "FLAG: H/D mix"
   }
 }

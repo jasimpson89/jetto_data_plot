@@ -25,7 +25,7 @@
   },
   "FLAG: HYDROGEN": {
     "var_type": "flag",
-    "label_name": "P_tot (MW)"
+    "label_name": "FLAG: HYDROGEN"
   }, 
   "FLAG: H/D mix": {
     "var_type": "flag",

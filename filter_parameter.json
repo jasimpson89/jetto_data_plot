@@ -19,6 +19,14 @@
     "var_type": "min_max",
     "label_name": "P_tot (MW)"
   },
+    "FLAG: JET-C": {
+    "var_type": "flag",
+    "label_name": "FLAG: JET-C"
+  },
+  "FLAG: JET-ILW": {
+    "var_type": "flag",
+    "label_name": "FLAG: JET-ILW"
+  },
   "FLAG: DEUTERIUM": {
     "var_type": "flag",
     "label_name": "FLAG: DEUTERIUM"
@@ -54,14 +62,6 @@
   "FLAG: pellets": {
     "var_type": "flag",
     "label_name": "FLAG: pellets"
-  },
-  "FLAG: JET-C": {
-    "var_type": "flag",
-    "label_name": "FLAG: JET-C"
-  },
-  "FLAG: JET-ILW": {
-    "var_type": "flag",
-    "label_name": "FLAG: JET-ILW"
   },
   "FLAG: HRTS data validated": {
     "var_type": "flag",

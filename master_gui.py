@@ -16,7 +16,8 @@ class MyFirstGUI:
 
         self.filter_store = filter_list
 
-
+        # avialable plotting colours
+        self.colours = ['black', 'red','green','blue','cyan']
         # Set up filter lists
         column_no = 0
         row_no = 0
@@ -27,11 +28,14 @@ class MyFirstGUI:
         self.column_no_flag = 5
 
         for filter in filter_list.keys():
-            print(filter_list.keys())
             self.set_up_selction(master,row_no,row_no_flag,column_no,getattr(dataframe,filter),
                                  filter_list[filter],filter, set_size=0.1)
+            if column_no > self.column_no_flag:
+                # ensures no over lap with flag checkboxes
+                column_no=0
+            else:
+                column_no+=1
 
-            column_no+=1
 
         self.plot_button = Button(master, text="Plot selected filtered data", command=lambda: self.filter_db(dataframe))
         self.plot_button.grid(row=5, column=0, columnspan = 2, rowspan=2, sticky='NSEW',ipadx=20,ipady=20)
@@ -66,40 +70,49 @@ class MyFirstGUI:
 
     def filter_db(self,df):
         for filter in self.filter_store:
+            # print(filter)
             checkbox_attr_string = filter+'_checkbox'
             checkbox = getattr(self,checkbox_attr_string)
-            if (checkbox.var.get()) == 1:
-                print("Filtering on - " + str(checkbox.cget("text")))
+            if self.filter_store[filter]["var_type"] == 'min_max':
+                # this means its drop down box with min and max values
+                if (checkbox.var.get()) == 1:
+                    # the user has selected this to be filtered upon
+                    print("Filtering on - " + self.filter_store[filter]["label_name"])
 
-                minoption_attr_string = filter + '_options_min'
-                min_options = getattr(self, minoption_attr_string)
+                    minoption_attr_string = filter + '_options_min'
+                    min_options = getattr(self, minoption_attr_string)
 
-                maxoption_attr_string = filter + '_options_max'
-                max_options = getattr(self, maxoption_attr_string)
+                    maxoption_attr_string = filter + '_options_max'
+                    max_options = getattr(self, maxoption_attr_string)
 
-                min_val = (min_options.value.get())
+                    min_val = (min_options.value.get())
 
-                max_val = (max_options.value.get())
+                    max_val = (max_options.value.get())
 
-                try:
-                    float(min_val)
-                except ValueError:
-                    messagebox.showerror(title='Selection error',
-                                           message='Please choose a min value for selected filter - '
-                                                   + str(checkbox.cget("text")))
-                    return
+                    try:
+                        float(min_val)
+                    except ValueError:
+                        messagebox.showerror(title='Selection error',
+                                               message='Please choose a min value for selected filter - '
+                                                       + str(checkbox.cget("text")))
+                        return
 
-                try:
-                    float(max_val)
-                except ValueError:
-                    messagebox.showerror(title='Selection error',
-                                           message='Please choose a max value for selected filter - '
-                                                   + str(checkbox.cget("text")))
-                    return
+                    try:
+                        float(max_val)
+                    except ValueError:
+                        messagebox.showerror(title='Selection error',
+                                               message='Please choose a max value for selected filter - '
+                                                       + str(checkbox.cget("text")))
+                        return
 
-                filter_data = getattr(df,filter)
-                print(filter_data)
-                df = df[(filter_data >= float(min_val)) & (filter_data <= float(max_val))]
+                    df = df[(df[filter] >= float(min_val)) & (df[filter] <= float(max_val))]
+            if self.filter_store[filter]["var_type"] == 'flag':
+                # Filter on flags
+                if checkbox.var.get() == 1:
+                    # filter ON on checkbox
+                    print('Filtering on - '+self.filter_store[filter]["label_name"])
+                    df = df[(df[filter] == 1)]
+                    print(df)
 
 
         self.df_filtered = df
@@ -111,7 +124,8 @@ class MyFirstGUI:
         selected_ydata_label = self.y_plot_selection.value.get()
 
         filtered_df = self.df_filtered
-
+        print('FILTER DATA')
+        print(filtered_df)
         # Plot filtered selected data
         fig, ax = plt.subplots()
         ax.plot(filtered_df[selected_xdata_label],filtered_df[selected_ydata_label],'r*')
@@ -138,21 +152,26 @@ class MyFirstGUI:
         setattr(self,obj, Checkbutton(master, text=filter_data["label_name"], variable=var1, onvalue=1, offvalue=0))
         checkbox = getattr(self,obj)
         checkbox.var = var1
-        print(filter_data)
+
         if filter_data["var_type"] == 'flag':
-            print(filter_data)
+
             checkbox.grid(row=self.row_no_flag, column=self.column_no_flag, sticky='NSEW',padx=10,pady=10)
+
+            # set up colour selectors for each flag
+            # Variable for max current range
+            flag_colour_data = StringVar(master)
+            flag_colour_data.set('black')  # default value
+            #
+            obj = filter_name + '_flag_colour_option'
+            setattr(self, obj, OptionMenu(master, flag_colour_data, *self.colours))
+            flag_colour_selector = getattr(self, obj)
+            flag_colour_selector.grid(row=self.row_no_flag, column=self.column_no_flag + 1, sticky='NSEW', padx=10,
+                                      pady=10)
+            flag_colour_selector.value = flag_colour_data
+
             self.row_no_flag += 1
         else:
             checkbox.grid(row=row_no, column=column_no, sticky='NSEW',padx=10,pady=10)
-        # if filter_data["var_type"] == "flag":
-        #     print(filter_data["var_type"])
-        #     # place on the right of screen
-        #     checkbox.grid(row=row_no, column=max(column_no), sticky='NSEW',padx=10,pady=10)
-        #     # row_no_flag += 1
-        #     # return row_no_flag
-        # else:
-        #     checkbox.grid(row=row_no, column=column_no, sticky='NSEW',padx=10,pady=10)
 
 
 

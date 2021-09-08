@@ -1,0 +1,53 @@
+{
+  "runs": {
+    "run6": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_1_5_FRANTIC",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1.5 E2D",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "+"
+      }
+    },
+    "run7": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_3_FRANTIC_cont",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3 E2D",
+        "color": "k",
+        "marker_color": "k",
+        "linestyle": "-",
+        "marker": "d"
+      }
+    },
+      "run8": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_4_FRANTIC",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4 E2D",
+        "color": "c",
+        "marker_color": "c",
+        "linestyle": "-",
+        "marker": "s"
+      }
+
+    }
+
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca's case rerun
+- Fixed width cases
+- Separatrix temperature set based off EDGE2D
+
+
+

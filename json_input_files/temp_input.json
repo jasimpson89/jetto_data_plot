@@ -1,0 +1,27 @@
+{
+  "runs": {
+    "run4": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/data/nesep_peped_scaling/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_nesep_5/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=5",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      },
+      "options": {
+        "mtanh_fit_time": 59.216
+      }
+    }
+
+
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Cases which show the scaling of peped v. nesep
+
+

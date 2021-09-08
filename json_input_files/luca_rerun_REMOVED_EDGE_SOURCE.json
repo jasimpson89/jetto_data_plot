@@ -1,0 +1,78 @@
+{
+  "runs": {
+     "run3": {
+      "globals": {
+      "run_dir": "./data/luca_rerun_nesep_scan_NO_EDGE_SOURCE/nesep_2",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run2": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan_NO_EDGE_SOURCE/nesep_2_A",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2_A",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "+"
+      }
+    },
+    "run1": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan_NO_EDGE_SOURCE/nesep_3",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3",
+        "color": "g",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "d"
+      }
+    },
+      "run4": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan_NO_EDGE_SOURCE/nesep_4",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+      "run5": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan_NO_EDGE_SOURCE/nesep_5",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=5",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "s"
+      }
+    }
+
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca re-run cases
+- For the past month or so I have been running cases which Luca provided me
+- I didn't realise that he had an edge neutral source turned on
+- I turned this off when I was running the EIRENE cases however forgot when I was doing this study
+- These cases are run without this edge source. This is indeed has made a massive difference
+

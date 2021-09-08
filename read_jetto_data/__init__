@@ -1,0 +1,9 @@
+import read_jetto_data.read_data as read_jetto_data
+
+if __name__ == '__main__':
+
+    dir = ['./test_data/']
+    label = ['test']
+    color = ['r']
+    marker_color = ['r']
+    read_jetto_data.read_data()

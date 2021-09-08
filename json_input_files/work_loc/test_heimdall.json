@@ -1,0 +1,24 @@
+{
+  "runs": {
+     "run3": {
+      "globals": {
+      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_5_e19_t_sep_E2D_EPED_nesep_4/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    }
+
+  }
+}
+
+%# MARKDOWN NOTES START HERE
+
+# Luca re-run cases
+- this is a test to move to Hiemdall as it more convient to work here
+

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def read_samuli_data():
 
-    file = '/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/analysis_routines/pedestal_database_reader/data/summary_sc_runs_sauter.csv'
+    file = './analysis_routines/pedestal_database_reader/data/summary_sc_runs_sauter.csv'
     dataframe = pd.read_csv(file, skipinitialspace=True)
     return dataframe
 

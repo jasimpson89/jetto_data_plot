@@ -1,5 +1,4 @@
 # Package imports
-import bohek_tabs.plotting_routines.stability_plots as bohek_stability_plots
 
 # Std imports
 import pandas as pd

@@ -17,7 +17,7 @@ def rename_columns(dataframe):
 
     return dataframe
 def read_ped(file = '',rename_columns_flag = True):
-    file = '/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/analysis_routines/pedestal_database_reader/data/Table_EUROfusion_JETILW-JETC_pedestal_v17.txt'
+    file = './analysis_routines/pedestal_database_reader/data/Table_EUROfusion_JETILW-JETC_pedestal_v17.txt'
     dataframe = pd.read_csv(file, skipinitialspace=True)
 
     # rename columns to make them easier to reference

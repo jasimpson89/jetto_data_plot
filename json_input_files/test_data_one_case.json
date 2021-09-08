@@ -1,0 +1,26 @@
+{
+  "runs": {
+    "run1": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_0_5_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=0.5 frantic",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# nesep=5 to nesep =2
+
+- Wanted to see the alpha versus j over time
+- this was to see if it was really peeling limited
+- Perhaps to look at why
+
+

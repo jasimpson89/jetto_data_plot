@@ -1,0 +1,33 @@
+{
+  "runs": {
+    "run1": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_2/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run2": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/mount/common/jetto/runs/runluca_rerun_check_modes_nesep_2_EIR",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2 EIR",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Comp Frantic and EIR at nesep=2 for Luca's  case no change

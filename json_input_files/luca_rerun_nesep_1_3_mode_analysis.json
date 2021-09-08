@@ -1,0 +1,48 @@
+{
+  "runs": {
+    "run3": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_1_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run4": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_3_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run5": {
+      "globals": {
+        "run_dir": "./data/bootstrap_current_invest/runluca_rerun_check_modes_start_n3_modes_n1_n3_n5_n7_n10_n12_nesep_1/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1 \n peeling",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "+"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca's case rerun
+- Just nesep=1 and 3
+- turned off checking for ballooning modes

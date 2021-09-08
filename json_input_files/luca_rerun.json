@@ -1,0 +1,118 @@
+{
+  "runs": {
+    "run3": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_1_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run2": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_1_5_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1.5",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "+"
+      }
+    },
+    "run1": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_2/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "g",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "d"
+      }
+    },
+    "run4": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_3_FRANTIC_CONT/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run5": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_4_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "s"
+      }
+    },
+    "run6": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_1_5_FRANTIC",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1.5 E2D",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "--",
+        "marker": "+"
+      }
+    },
+    "run7": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_3_FRANTIC_cont",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3 E2D",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "--",
+        "marker": "d"
+      }
+    },
+    "run8": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_E2D_BC_nesep_4_FRANTIC",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4 E2D",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "--",
+        "marker": "s"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca's case rerun
+- We see that lucas nesep=0.1e19 case is very much ballooning limited
+- if simply increase the separatrix density what do we see, note taht tesep=tisep=100
+- we also using FRANTIC in these cases
+- We are now comparing the cases where we have used the boundary conditions from EDGE2D
+- The goal here is to compare the effect of the inclusion of the separatrix bounday conditions
+
+

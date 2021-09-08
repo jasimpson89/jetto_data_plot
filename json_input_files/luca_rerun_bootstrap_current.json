@@ -1,0 +1,50 @@
+{
+  "runs": {
+    "run1": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_2/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run2": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_2_FRANTIC_bootstrap_off/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2 B.S. off",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run3": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_2_FRANTIC_bootstrap_off_EPED//",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2 BS=off and EPED on",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca's case rerun BS OFF
+- Take nesep case (not ideal I know, really want nesep=3)
+- Turn off B.S
+- Then turn on EPED with B.S. off
+

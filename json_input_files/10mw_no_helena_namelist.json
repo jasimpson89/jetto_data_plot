@@ -1,0 +1,79 @@
+{
+  "runs": {
+    "run2": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/data/10MW_no_helena/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_10_MW_nesep_2_CONT_no_helena_namelist/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      },
+      "options": {
+        "mtanh_fit_time": 134.69
+      }
+    },
+    "run3": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/data/10MW_no_helena/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_10_MW_nesep_3_no_helena_namelist/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3",
+        "color": "g",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      },
+      "options": {
+        "mtanh_fit_time": 111.18
+      }
+    },
+    "run4": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/data/10MW_no_helena/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_10_MW_nesep_4_A_no_helena_namelist/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      },
+      "options": {
+        "mtanh_fit_time": 98.7
+      }
+    },
+    "run5": {
+      "globals": {
+        "run_dir": "/Users/jsimpson/work/local/python_scipts/jetto_datadashboard/data/10MW_no_helena/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_10_MW_nesep_5_no_helena_namelist/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=5",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      },
+      "options": {
+        "mtanh_fit_time": 98.7
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+These cases have all the helena namelist paramters taken out, this means we aren't getting weird proifles passed to the
+stability analysis
+
+We have also now using 10MW instead of 13MW
+
+We also see that peped v. nesep scaling is not observed at the moment
+
+
+

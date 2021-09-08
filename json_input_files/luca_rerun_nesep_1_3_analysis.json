@@ -1,0 +1,64 @@
+{
+  "runs": {
+    "run3": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_1_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run4": {
+      "globals": {
+        "run_dir": "./data/luca_rerun_nesep_scan/runluca_rerun_check_modes_nesep_3_FRANTIC/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3",
+        "color": "k",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run5": {
+      "globals": {
+        "run_dir": "./data/bootstrap_current_invest/runluca_rerun_check_modes_start_n2_n1_to_n3_interpreative_SHORT_nesep_3/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3 INTERP",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "+"
+      }
+    },
+    "run6": {
+      "globals": {
+        "run_dir": "./data/bootstrap_current_invest/runluca_rerun_check_modes_start_n2_n1_to_n3_temp_fixed_transport_SHORT_nesep_3/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3 FXD TRANS",
+        "color": "b",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "d"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# Luca's case rerun
+- Just nesep=1 and 3
+- if simply increase the separatrix density what do we see, note taht tesep=tisep=100
+- we also using FRANTIC in these cases
+
+

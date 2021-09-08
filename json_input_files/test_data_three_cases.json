@@ -1,0 +1,91 @@
+{
+  "runs": {
+    "run1": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label1",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run2": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label 2",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run3": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label 3",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run4": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label 4",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run5": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label 5",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    },
+    "run6": {
+      "globals": {
+        "run_dir": "./data/bc_swap_scan/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_5_to_nesep_2/",
+        "read_jst": "False"
+      },
+      "plot_options": {
+        "label": "label 6",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "*"
+      }
+    }
+  }
+}
+%# MARKDOWN NOTES START HERE
+
+# nesep=5 to nesep =2
+
+- Wanted to see the alpha versus j over time
+- this was to see if it was really peeling limited
+- Perhaps to look at why
+
+

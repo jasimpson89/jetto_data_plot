@@ -1,6 +1,6 @@
 # Package imports
 import analysis_routines.pedestal_database_reader.filter_pe_nesep as filter_pe_nesep
-
+import analysis_routines.pedestal_database_reader.filter_ped_db_nesep_v_peped_from_lorenzo_plot as new_filter
 # Std imports
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -16,7 +16,9 @@ def main():
 
     # Lorenzo pedestal database
     # returns dataframe
-    pe_nesep_exp_df = filter_pe_nesep.plot_pe_nesep()
+    # pe_nesep_exp_df = filter_pe_nesep.plot_pe_nesep()
+
+    pe_nesep_exp_df = new_filter.filter()
 
     # Dataframe for Samuli's data
     stability_df = read_samuli_data()

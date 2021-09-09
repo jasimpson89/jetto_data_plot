@@ -128,13 +128,13 @@ def main(simulation_list,opts):
 
             # FROM FIT
             ax_nesep_pedestal_parm[0,0].plot(nesep/1e19,teped[0]/1e3,marker=simulation.marker,color=simulation.color,
-                                             label=simulation.label,ms=15)
+                                             label=simulation.label,ms=15, alpha=0.5)
             ax_nesep_pedestal_parm[0,1].plot(nesep/1e19,neped[0]/1e19,marker=simulation.marker,color=simulation.color,
-                                             label=simulation.label,ms=15)
+                                             label=simulation.label,ms=15, alpha=0.5)
             ax_nesep_pedestal_parm[1, 0].plot(nesep/1e19, deltate, marker=simulation.marker, color=simulation.color,
-                                      label=simulation.label,ms=15)
+                                      label=simulation.label,ms=15, alpha=0.5)
             ax_nesep_pedestal_parm[1, 1].plot(nesep/1e19, deltane, marker=simulation.marker, color=simulation.color,
-                                      label=simulation.label,ms=15)
+                                      label=simulation.label,ms=15, alpha=0.5)
 
 
             # Plot fits
@@ -151,15 +151,15 @@ def main(simulation_list,opts):
 
         # FROM JST
         ax_nesep_pedestal_parm[0, 0].plot(nesep / 1e19, jst['TEBA'] / 1e3, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=0.4)
+                                          color=simulation.color, label=simulation.label+'_jst',alpha=1.0)
         ax_nesep_pedestal_parm[0, 1].plot(nesep / 1e19, jst['NEBA'] / 1e19, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=0.4)
+                                          color=simulation.color, label=simulation.label+'_jst',alpha=1.0)
         # NOT SURE IF I CAN DO THIS BECAUSE OF WDITH IS APPLIED TO PRESSURE
         # i can delta(ne)=delta(te)=delta(pe)
         ax_nesep_pedestal_parm[1, 0].plot(nesep / 1e19, jst['DRBA'], marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label+'_DRBA_from_JST',alpha=0.4,ms=15)
+                                          label=simulation.label+'_DRBA_from_JST',alpha=1.0,ms=15)
         ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, jst['DRBA'], marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label + '_DRBA_from_JST',alpha=0.4,ms=15)
+                                          label=simulation.label + '_DRBA_from_JST',alpha=1.0,ms=15)
 
         # Different plot
         ax_alpha.plot(nesep / 1e19, jst['ALFM'] / 1e3, marker=simulation.marker,ms=15,
@@ -171,12 +171,3 @@ def main(simulation_list,opts):
         # legend.draggable(state=True)
 
         legend = ax_nesep_peped.legend()
-        # legend.draggable(state=True)
-        # TESTING THE FITS, BUT JUST USE BOHEK INSTEAD
-        # plt.figure(1000)
-        # plt.plot(te_r_end_time,te_fit_data,'--r',label='fit')
-        # plt.plot(te_r_end_time,te_orig_data,'-k',label='orig')
-        # plt.figure(2000)
-        # plt.plot(ne_r_end_time, ne_fit_data, '--r', label='fit')
-        # plt.plot(ne_r_end_time, ne_orig_data, '-k', label='orig')
-        # plt.show()

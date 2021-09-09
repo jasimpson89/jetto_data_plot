@@ -38,8 +38,9 @@ if __name__ == '__main__':
     # input_file = 'json_input_files/nesep_scan_shows_trend_with_EPED_off_100.json'
     # input_file = 'json_input_files/nesep_scan_shows_trend.json'
     # input_file = 'json_input_files/10mw_no_helena_namelist.json'
-    input_file = 'json_input_files/work_loc/test_heimdall.json'
+    # input_file = 'json_input_files/work_loc/test_heimdall.json'
     # input_file = 'json_input_files/pesep_trend_comp_10MW.json'
+    input_file = 'json_input_files/work_loc/nesep_1_fixed_width_tessep_100.json'
     opts = cmd_argsparse.parse_opt()
     input_data = read_input_file.read_data(input_file)
     simulation_data = read_jetto_data.read_data(input_data)

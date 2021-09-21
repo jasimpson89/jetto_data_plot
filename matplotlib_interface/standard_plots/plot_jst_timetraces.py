@@ -42,12 +42,12 @@ def plot_jst(simulations):
         max_alpha_x = jst['time'].values
         time = jst['time'].values
         time_jsp = jsp['time'].values
-        ped_profiles_ax[0, 0].set_title('Electron density')
-        ped_profiles_ax[0, 1].set_title('Electron temperature')
-        ped_profiles_ax[0, 2].set_title('Bootstrap current max')
-        ped_profiles_ax[1, 0].set_title('Ion Temperature')
-        ped_profiles_ax[1, 1].set_title('Alpha max')
-        ped_profiles_ax[1, 2].set_title('Electron pressure')
+        # ped_profiles_ax[0, 0].set_title('Electron density')
+        # ped_profiles_ax[0, 1].set_title('Electron temperature')
+        # ped_profiles_ax[0, 2].set_title('Bootstrap current max')
+        # ped_profiles_ax[1, 0].set_title('Ion Temperature')
+        # ped_profiles_ax[1, 1].set_title('Alpha max')
+        # ped_profiles_ax[1, 2].set_title('Electron pressure')
 
         ped_profiles_ax[0, 0].plot(time, jst['NEBA'])
         ped_profiles_ax[0, 0].set_xlabel('Time (s)')
@@ -61,22 +61,22 @@ def plot_jst(simulations):
         ped_profiles_ax[1, 0].set_xlabel('Time (s)')
         ped_profiles_ax[1, 0].set_ylabel('$T_{i, ped top}$')
 
-        ped_profiles_ax[0, 1].plot(time, jst['TEBA']*jst['NEBA'])
-        ped_profiles_ax[0, 1].set_xlabel('Time (s)')
-        ped_profiles_ax[0, 1].set_ylabel('$p_{e, ped top}$')
+        ped_profiles_ax[0, 2].plot(time, jst['TEBA']*jst['NEBA'])
+        ped_profiles_ax[0, 2].set_xlabel('Time (s)')
+        ped_profiles_ax[0, 2].set_ylabel('$p_{e, ped top}$')
 
         ped_profiles_ax[1, 1].plot(time, max_alpha)
         ped_profiles_ax[1, 1].set_xlabel('Time (s)')
         ped_profiles_ax[1, 1].set_ylabel(r'$\alpha_{max}$')
 
 
-        ped_profiles_ax[0, 2].plot(time_jsp, max_current,label=simulation.label)
-        ped_profiles_ax[0, 2].set_xlabel('Time (s)')
-        ped_profiles_ax[0, 2].set_ylabel(r'$j_{boostrap,max}$')
+        ped_profiles_ax[1, 2].plot(time_jsp, max_current,label=simulation.label)
+        ped_profiles_ax[1, 2].set_xlabel('Time (s)')
+        ped_profiles_ax[1, 2].set_ylabel(r'$j_{boostrap,max}$')
 
 
     fig_ped.subplots_adjust(right=0.75)
-    ped_profiles_ax[0,2].legend(bbox_to_anchor=(1.04,0.5),loc='center left',labelspacing=1.2)
+    ped_profiles_ax[1,2].legend(bbox_to_anchor=(1.04,0.5),loc='center left',labelspacing=1.2)
 
     fig_ped.tight_layout()
 

@@ -64,6 +64,7 @@ def main(simulations):
             te_slice = (jsp_single["TE"][slice_idx:]).values
             ne_slice = (jsp_single["NE"][slice_idx:]).values
             ti_slice = (jsp_single["TI"][slice_idx:]).values
+            psi_slice = (jsp_single["XPSI"][slice_idx:]).values
 
             # calc prefactors in bootstrap current
             ne_multi = 2.44*(te_slice[idx_max_bootstrap]+ti_slice[idx_max_bootstrap])
@@ -73,12 +74,19 @@ def main(simulations):
             # Take the position of maximum bootstrap current
             # if te_grad.any() or ne_grad.any() or ti_grad.any() or pre_grad.any() > 0:
             #     print("POSTIVE GRADIENT FOUND")
+            if idx_max_bootstrap == len(ne_grad):
+                # this means the peak is at the edge
+                print('WARNING! Check bootstrap calc')
+                idx_max_bootstrap -= 1
+
             max_ne_grad.append(ne_grad[idx_max_bootstrap]*ne_multi)
             max_pe_grad.append(pre_grad[idx_max_bootstrap])
             max_te_grad.append(te_grad[idx_max_bootstrap]*te_multi)
             max_ti_grad.append(ti_grad[idx_max_bootstrap]*ti_multi)
             time.append(jsp_single["time"])
             time_index.append(index)
+
+            idx_max_pre = np.argmax(pre_grad)
 
             min_te_idx = np.argmin(te_grad)
             min_ti_idx = np.argmin(ti_grad)
@@ -88,6 +96,9 @@ def main(simulations):
             pos_max_ne_grad.append(r[min_ne_idx])
             pos_max_te_grad.append(r[min_te_idx])
             pos_max_ti_grad.append(r[min_ti_idx])
+            if max_jzbs_idx == len(r):
+                max_jzbs_idx -= 1
+                # print('WARNING! Check bootstrap calc')
             pos_max_jzbs.append(r[max_jzbs_idx])
             pos_max_pre_grad.append(r[min_pre_idx])
 
@@ -115,7 +126,9 @@ def main(simulations):
         im1_alpha_j = ax_alpha_j.scatter(pos_max_pre_grad, pos_max_jzbs, marker=simulation.marker,
                                     label=simulation.label, c=time_index)
 
-
+        print("Case - ", simulation.label)
+        print("Max pressure gradient - ", psi_slice[idx_max_pre])
+        print("Max bootstrap gradient - ", psi_slice[idx_max_bootstrap])
     # ax[0].set_ylim(bottom=0)
     ax[0].ticklabel_format(axis='y', style='sci', scilimits=(0, 0))
     ax[0].ticklabel_format(axis='x', style='sci', scilimits=(0, 0))

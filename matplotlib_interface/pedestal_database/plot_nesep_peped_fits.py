@@ -6,27 +6,38 @@ import analysis_routines.pedestal_database_reader.read_plot_samuli_data as read_
 import matplotlib.pyplot as plt
 
 def plot_exp_ped_height_width(df):
-    fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=2)
+    fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=3)
 
     # teped
     ax_nesep_peped[0,0].scatter(df.nesep, df.teped)
-    ax_nesep_peped[0,0].set_xlabel(r'$n_{e,sep}$')
+    ax_nesep_peped[0,0].set_xlabel(r'$n_{e,sep} (10^{19})$')
     ax_nesep_peped[0,0].set_ylabel(r'$T_{e,ped}$ keV')
 
     # neped
     ax_nesep_peped[0,1].scatter(df.nesep, df.neped)
-    ax_nesep_peped[0,1].set_xlabel(r'$n_{e,sep}$')
-    ax_nesep_peped[0,1].set_ylabel(r'$n_{e,ped}$')
+    ax_nesep_peped[0,1].set_xlabel(r'$n_{e,sep} (10^{19})$')
+    ax_nesep_peped[0,1].set_ylabel(r'$n_{e,ped} (10^{19})$')
 
     # te width
     ax_nesep_peped[1,0].scatter(df.nesep, df.deltate_cm/100)
-    ax_nesep_peped[1,0].set_xlabel(r'$n_{e,sep}$')
+    ax_nesep_peped[1,0].set_xlabel(r'$n_{e,sep} (10^{19})$')
     ax_nesep_peped[1,0].set_ylabel(r'$\Delta_{te} (m)$')
 
     # ne width
     ax_nesep_peped[1,1].scatter(df.nesep, df.deltane_cm/100)
-    ax_nesep_peped[1,1].set_xlabel(r'$n_{e,sep}$')
+    ax_nesep_peped[1,1].set_xlabel(r'$n_{e,sep} (10^{19})$')
     ax_nesep_peped[1,1].set_ylabel(r'$\Delta_{ne} (m)$')
+
+    # pe height
+    ax_nesep_peped[0,2].scatter(df.nesep, df.peped)
+    ax_nesep_peped[0,2].set_xlabel(r'$n_{e,sep} (10^{19})$')
+    ax_nesep_peped[0,2].set_ylabel(r'$p_{e,ped} (kPa)$')
+
+
+    # Total particle content
+    ax_nesep_peped[1,2].scatter(df.nesep, df.neped*df.plasma_volume)
+    ax_nesep_peped[1,2].set_xlabel(r'$n_{e,sep} (10^{19})$')
+    ax_nesep_peped[1,2].set_ylabel('Approx particle content \n'r'$n_{e,ped} * Vol_{plasma} (10^{19}$)')
 
     return ax_nesep_peped
 
@@ -35,10 +46,10 @@ def main(simulation_list,opts):
     # Get experimental data
     fig_nesep_peped,ax_nesep_peped = plt.subplots(nrows=1,ncols=1)
     pe_nesep_exp_df,stability_df,pe_nesep_exp_stability_filter_df = read_exp_ped_data.main()
-    ax_nesep_peped.scatter(pe_nesep_exp_df.nesep,pe_nesep_exp_df.peped)
+    # ax_nesep_peped.scatter(pe_nesep_exp_df.nesep,pe_nesep_exp_df.peped)
     ax_nesep_peped.set_xlim(xmin=0)
     ax_nesep_peped.set_ylim(ymin=0)
-    ax_nesep_peped.set_xlabel(r'$n_{e,sep}$')
+    ax_nesep_peped.set_xlabel(r'$n_{e,sep} / n_{e,ped}$')
     ax_nesep_peped.set_ylabel(r'$P_{e,ped}$ kPA')
 
     ax_nesep_pedestal_parm = plot_exp_ped_height_width(pe_nesep_exp_df)
@@ -51,14 +62,14 @@ def main(simulation_list,opts):
     j_crit = pe_nesep_exp_stability_filter_df['exp.<j>']
     j_crit_exp = pe_nesep_exp_stability_filter_df['crit<j> raw']
 
-    j_crit_ratio = j_crit_exp / j_crit
-    alpha_crit_ratio = alpha_crit_exp / alpha_crit
+    j_crit_ratio = j_crit / j_crit_exp
+    alpha_crit_ratio = alpha_crit / alpha_crit_exp
 
     ax_alpha.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['crit.alpha raw'],marker='o')
     ax_alpha.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['exp.alpha'],marker='d')
 
-    ax_j.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['crit<j> raw'],marker='o')
-    ax_j.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['exp.<j>'],marker='d')
+    ax_j.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['crit<j> raw']*1e6,marker='o')
+    ax_j.scatter(pe_nesep_exp_stability_filter_df.nesep, pe_nesep_exp_stability_filter_df['exp.<j>']*1e6,marker='d')
 
     ax_ratio_alpha.scatter(pe_nesep_exp_stability_filter_df.nesep, alpha_crit_ratio,c=pe_nesep_exp_stability_filter_df['crit. n diam'],marker='o')
     im = ax_ratio_j.scatter(pe_nesep_exp_stability_filter_df.nesep, j_crit_ratio,c=pe_nesep_exp_stability_filter_df['crit. n diam'],marker='o')
@@ -73,9 +84,9 @@ def main(simulation_list,opts):
     ax_j.set_ylabel(r'$J_{max,ped}$')
 
     ax_ratio_alpha.set_xlabel(r'$n_{e,sep}$')
-    ax_ratio_alpha.set_ylabel(r'$\alpha_{exp}/ \alpha_{crit}$')
+    ax_ratio_alpha.set_ylabel(r'$\alpha_{crit}/ \alpha_{exp}$')
     ax_ratio_j.set_xlabel(r'$n_{e,sep}$')
-    ax_ratio_j.set_ylabel(r'$j_{exp}/ j_{crit}$')
+    ax_ratio_j.set_ylabel(r'$j_{crit}/ j_{exp}$')
 
 
     # Plot the fits
@@ -83,10 +94,10 @@ def main(simulation_list,opts):
     ax_te_fit.set_ylabel('TE')
     ax_ne_fit.set_ylabel('NE')
 
-    ax_nesep_peped.scatter(pe_nesep_exp_df.nesep,pe_nesep_exp_df.peped)
+    ax_nesep_peped.scatter(pe_nesep_exp_df.nesep/pe_nesep_exp_df.neped,pe_nesep_exp_df.peped)
     ax_nesep_peped.set_xlim(xmin=0)
     ax_nesep_peped.set_ylim(ymin=0)
-    ax_nesep_peped.set_xlabel(r'$n_{e,sep}$')
+    ax_nesep_peped.set_xlabel(r'$n_{e,sep}/n_{e,ped}$')
     ax_nesep_peped.set_ylabel(r'$P_{e,ped}$ kPA')
 
     for simulation in simulation_list:
@@ -151,23 +162,43 @@ def main(simulation_list,opts):
 
         # FROM JST
         ax_nesep_pedestal_parm[0, 0].plot(nesep / 1e19, jst['TEBA'] / 1e3, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=1.0)
+                                          color=simulation.color, label=simulation.label,alpha=1.0)
         ax_nesep_pedestal_parm[0, 1].plot(nesep / 1e19, jst['NEBA'] / 1e19, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=1.0)
+                                          color=simulation.color, label=simulation.label,alpha=1.0)
         # NOT SURE IF I CAN DO THIS BECAUSE OF WDITH IS APPLIED TO PRESSURE
         # i can delta(ne)=delta(te)=delta(pe)
-        ax_nesep_pedestal_parm[1, 0].plot(nesep / 1e19, jst['DRBA'], marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label+'_DRBA_from_JST',alpha=1.0,ms=15)
-        ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, jst['DRBA'], marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label + '_DRBA_from_JST',alpha=1.0,ms=15)
+        r = jsp['R'].values
+        psi = jsp['XPSI'].values
+        pedestal_width = r[-1] - r[int(jst['JTOB'])]
+        pedestal_width_psi = psi[-1] - psi[int(jst['JTOB'])]
+        ax_nesep_pedestal_parm[1, 0].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
+                                          label=simulation.label,alpha=1.0,ms=15)
+        ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
+                                          label=simulation.label,alpha=1.0,ms=15)
+
+        peped = (jst['TEBA'] * jst['NEBA'] * 1.6E-19)/1e3
+        ax_nesep_pedestal_parm[0, 2].plot(nesep / 1e19, peped, marker=simulation.marker, color=simulation.color,
+                                          label=simulation.label, alpha=1.0, ms=15)
+
+        compareable_particle_content = (jst['NEBA']/1e19)*jst['VOL'] # normalise for the ped database
+        ax_nesep_pedestal_parm[1, 2].plot(nesep / 1e19,compareable_particle_content , marker=simulation.marker, color=simulation.color,
+                                          label=simulation.label, alpha=1.0, ms=15)
+
+        ax_nesep_peped.plot((nesep/jst['NEBA']), peped, marker=simulation.marker, color=simulation.color,
+                            label=simulation.label, ms=15)
+
 
         # Different plot
-        ax_alpha.plot(nesep / 1e19, jst['ALFM'] / 1e3, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=0.4)
-        ax_j.plot(nesep / 1e19, jst['CUBS'] / 1e19, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label+'_jst',alpha=0.4)
+        ax_alpha.plot(nesep / 1e19, jst['ALFM'], marker=simulation.marker,ms=15,
+                                          color=simulation.color, label=simulation.label,alpha=0.4)
+        ax_j.plot(nesep / 1e19, jst['CUBS'] , marker=simulation.marker,ms=15,
+                                          color=simulation.color, label=simulation.label,alpha=0.4)
 
-        legend = ax_nesep_pedestal_parm[1,1].legend()
+        # legend = ax_nesep_pedestal_parm[1,1].legend()
         # legend.draggable(state=True)
+
+        print("Case - ", simulation.label)
+        print('Pedestal with = ', pedestal_width_psi)
+
 
         legend = ax_nesep_peped.legend()

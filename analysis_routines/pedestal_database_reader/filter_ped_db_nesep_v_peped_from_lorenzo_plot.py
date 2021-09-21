@@ -16,5 +16,6 @@ def filter():
     dataframe.rename(columns={'P_TOT=PNBI+Pohm+PICRH-Pshi (MW)':'ptot'},inplace=True)
     dataframe.rename(columns={'Te pedestal width Rmid (cm)':'deltate_cm'},inplace=True)
     dataframe.rename(columns={'Ne pedestal width Rmid (cm)':'deltane_cm'},inplace=True)
+    dataframe.rename(columns={'plasma volume (m^3)':'plasma_volume'},inplace=True)
 
     return dataframe

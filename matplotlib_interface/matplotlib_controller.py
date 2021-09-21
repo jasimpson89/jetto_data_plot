@@ -30,10 +30,5 @@ def main(simulation_data,opts):
     gradient_plots.main(simulation_data)
 
 
-
-
-    # TODO get this from command line
-    fit_mtanh=True
-    if fit_mtanh == True:
-        # Fits mtanh to profiles and then plots peped v. nesep with experimental data
-        plot_nesep_peped_fits.main(simulation_data,opts)
+    # Fits mtanh to profiles and then plots peped v. nesep with experimental data
+    plot_nesep_peped_fits.main(simulation_data,opts)

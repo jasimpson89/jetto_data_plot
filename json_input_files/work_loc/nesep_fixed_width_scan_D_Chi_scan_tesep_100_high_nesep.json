@@ -1,0 +1,76 @@
+{
+  "runs": {
+   "run0": {
+      "globals": {
+      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_4_e19_t_sep_100_width_3cm_nesep_1//",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=1 3cm 100eV 4E19",
+        "color": "pink",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run2": {
+      "globals": {
+      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_5_e19_t_sep_100_width_2.5cm_nesep_2/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=2 2.5cm 100eV",
+        "color": "r",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run3": {
+      "globals": {
+      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_5_e19_t_sep_100_D_Chi_20_20_width_2.5cm_nesep_3/",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=3 2.5cm 100eV D/Chi=20/20",
+        "color": "g",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    },
+    "run4": {
+      "globals": {
+      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_5_e19_t_sep_100_D_Chi_20_20_wudth_2.5cm_nesep_4//",
+        "read_jst": "True"
+      },
+      "plot_options": {
+        "label": "nesep=4 2.5cm 100eV D/Chi=20/20",
+        "color": "c",
+        "marker_color": "w",
+        "linestyle": "-",
+        "marker": "o"
+      }
+    }
+  }
+}
+
+%# MARKDOWN NOTES START HERE
+
+# Luca re-run cases
+- this is a test to move to Hiemdall as it more convient to work here
+
+//     "run1": {
+//      "globals": {
+//      "run_dir": "/common/cmg/jsimpson/jetto/runs/runluca_restart_fixed_width_neped_5_e19_t_sep_100_width_2cm_nesep_1/",
+//        "read_jst": "True"
+//      },
+//      "plot_options": {
+//        "label": "nesep=1 2cm 100eV",
+//        "color": "b",
+//        "marker_color": "w",
+//        "linestyle": "-",
+//        "marker": "o"
+//      }
+//    },
+

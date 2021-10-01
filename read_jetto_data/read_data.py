@@ -43,7 +43,7 @@ def interpolate_mishka_data(path,load_jst,simulation):
         return simulation
 
 
-def set_up_data_store(jetto_data, plot_label, color, marker,load_jst ,run_path,
+def set_up_data_store(jetto_data, plot_label, color, marker,load_jst ,run_path, linestyle,
                       marker_edge_color='w', run_options=None):
 
     jetto_data.label = plot_label
@@ -51,6 +51,7 @@ def set_up_data_store(jetto_data, plot_label, color, marker,load_jst ,run_path,
     jetto_data.run_dir = run_path
     jetto_data.marker = marker
     jetto_data.color = color
+    jetto_data.linestyle = linestyle
     jetto_data.marker_edge_color = marker_edge_color
 
     if run_options is not None:
@@ -102,7 +103,7 @@ def read_data(input_data):
 
 
         jetto_data_plotting_dictionary = set_up_data_store(jetto_run, label,
-                                                           color, marker, load,run_path,
+                                                           color, marker, load,run_path,linestyle,
                                                            marker_edge_color='w', run_options=options)
 
 

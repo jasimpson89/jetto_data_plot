@@ -72,7 +72,3 @@ def read_info_file(run_dir):
 
     return xr.DataArray(most_unstable_mode,dims=["time"], coords={"time":most_unstable_mode_time})
 
-# TESTING
-# run_dr = '/common/cmg/jsimpson/jetto/runs/run84792_luca_rerun_recyclng_new_BC_EIR_EPED_EDGE2D_BC_nesep_2_to_nesep_5/'
-# xr=read_info_file(run_dr)
-# print(xr)

@@ -16,8 +16,10 @@ def main():
 
     # Lorenzo pedestal database
     # returns dataframe
+    # this returns I think the whole database
     # pe_nesep_exp_df = filter_pe_nesep.plot_pe_nesep()
 
+    # this new filter get the data for the psep v. nesep trend which is cross referencd with Samuli's data
     pe_nesep_exp_df = new_filter.filter()
 
     # Dataframe for Samuli's data

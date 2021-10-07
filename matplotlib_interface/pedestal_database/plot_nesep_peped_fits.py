@@ -44,17 +44,24 @@ def plot_exp_ped_height_width(df):
 def main(simulation_list,opts):
 
     # Get experimental data
-    fig_nesep_peped,ax_nesep_peped = plt.subplots(nrows=1,ncols=1)
+    
     pe_nesep_exp_df,stability_df,pe_nesep_exp_stability_filter_df = read_exp_ped_data.main()
     # ax_nesep_peped.scatter(pe_nesep_exp_df.nesep,pe_nesep_exp_df.peped)
+    
+    
+    fig_nesep_peped,ax_nesep_peped = plt.subplots(nrows=1,ncols=1)
     ax_nesep_peped.set_xlim(xmin=0)
     ax_nesep_peped.set_ylim(ymin=0)
     ax_nesep_peped.set_xlabel(r'$n_{e,sep} / n_{e,ped}$')
     ax_nesep_peped.set_ylabel(r'$P_{e,ped}$ kPA')
 
+
+
     ax_nesep_pedestal_parm = plot_exp_ped_height_width(pe_nesep_exp_df)
 
     fig_alpha_j,[[ax_alpha,ax_j],[ax_ratio_alpha,ax_ratio_j]] = plt.subplots(nrows=2,ncols=2)
+
+
 
     alpha_crit = pe_nesep_exp_stability_filter_df['crit.alpha raw']
     alpha_crit_exp = pe_nesep_exp_stability_filter_df['exp.alpha']

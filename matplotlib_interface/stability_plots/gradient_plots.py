@@ -16,6 +16,38 @@ def calc_gradients(jsp, slice_idx):
 
     return r[slice_idx:], te_grad[slice_idx:], ne_grad[slice_idx:], ti_grad[slice_idx:], pre_grad[slice_idx:]
 
+def calc_gradients_profile(jsp, x):
+
+    pre_grad = np.diff(jsp["PRE"].values) / np.diff(jsp[x].values)
+    te_grad = np.diff(jsp["TE"].values) / np.diff(jsp[x].values)
+    ne_grad = np.diff(jsp["NE"].values) / np.diff(jsp[x].values)
+    ti_grad = np.diff(jsp["TI"].values) / np.diff(jsp[x].values)
+    x_profile = (jsp[x])[0:-1]
+
+    return x_profile, te_grad, ne_grad, ti_grad, pre_grad
+
+def plot_grad_profiles(jsp,simulation, ax_grad_profile):
+
+    # Set the coordinate for making the gradient plots
+    x= "R"
+
+    x_profile, te_grad, ne_grad, ti_grad, pre_grad= calc_gradients_profile(jsp,x)
+
+    ax_grad_profile[0].plot(x_profile,te_grad,color=simulation.color,linestyle=simulation.linestyle,label=simulation.label)
+    ax_grad_profile[0].set_title('TE grad')
+
+    ax_grad_profile[1].plot(x_profile, ne_grad, color=simulation.color, linestyle=simulation.linestyle,
+                            label=simulation.label)
+    ax_grad_profile[1].set_title('NE grad')
+
+    ax_grad_profile[2].plot(x_profile, pre_grad, color=simulation.color, linestyle=simulation.linestyle,
+                            label=simulation.label)
+    ax_grad_profile[2].set_title('PE grad')
+
+    ax_grad_profile[3].plot(jsp[x], jsp["JZBS"], color=simulation.color, linestyle=simulation.linestyle,
+                            label=simulation.label)
+    ax_grad_profile[3].set_title('Bootstrap current')
+
 
 def main(simulations):
 
@@ -25,10 +57,19 @@ def main(simulations):
     fig_pos,ax_pos=plt.subplots(nrows=1,ncols=4,sharey=True)
     # Position of max alpha (electron pre) v. max current (J) in pedestal. Should be aligned
     fig_alpha_j,ax_alpha_j=plt.subplots(nrows=1,ncols=1)
+    # Plot for gradient profile at the mishka end time
+    fig_grad_profile, ax_grad_profile = plt.subplots(nrows=1,ncols=4)
+
 
     for simulation in simulations:
         jsp = simulation['JSP_mishka']
         jst = simulation['JST_mishka']
+
+
+        # Make plot of last time slice gradient
+        plot_grad_profiles(jsp.isel(time=-1), simulation, ax_grad_profile)
+
+
         # PLOT MAX GRAD versus MAX BOOTSTRAP
         max_bootstrap = []
         max_ne_grad = []
@@ -44,6 +85,8 @@ def main(simulations):
 
         time = []
         time_index = []
+
+
 
         for index in range(0,len(jsp["time"])):
             # Accumlate data

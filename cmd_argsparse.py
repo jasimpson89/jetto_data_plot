@@ -36,6 +36,18 @@ def parse_opt(parents=[]):
     parser.add_argument("-plotly", dest="plotly",
                         action="store_true", default=False,
                         help="Runs the plotly interface")
+    
+
+    parser.add_argument("-ppf", dest="ppf",
+                        action="store_true", default=False,
+                        help="Gets the fits from Lorenzo database for plotting")
+
+    
+    parser.add_argument("-hrts", dest="hets",
+                        action="store_true", default=False,
+                        help="Gets HRTS data for fitting")
+
+
     # End statement to parse the inputs
     opts = parser.parse_args()
 

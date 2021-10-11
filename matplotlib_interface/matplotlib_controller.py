@@ -9,6 +9,7 @@ import matplotlib_interface.stability_plots.gradient_plots as gradient_plots
 import matplotlib_interface.pedestal_database.plot_nesep_peped_fits as plot_nesep_peped_fits
 import matplotlib_interface.standard_plots.plot_jst_timetraces as plot_jst_timetraces
 import matplotlib_interface.pedestal_database.main_plot_fits_and_hrts_data as main_plot_fits_and_hrts_data
+import matplotlib_interface.pedestal_database.plot_lorenzo_fits as plot_lorenzo_fits
 """
 Control script for the matplotlib interface
 - Everything is self contained in each modules. Likely many loops that could be simplified however this makes the code
@@ -36,4 +37,9 @@ def main(simulation_data,opts):
 
 
     # This plots the HRTS data for given nesep and then plots the simulation data on the top
-    main_plot_fits_and_hrts_data.main(simulation_data)
+    if opts.hrts:
+        main_plot_fits_and_hrts_data.main(simulation_data)
+
+    # Plot Lorenzo fits for the peped v. nesep scaling
+    if opts.ppf:
+        plot_lorenzo_fits.plot_fits(simulation_data)

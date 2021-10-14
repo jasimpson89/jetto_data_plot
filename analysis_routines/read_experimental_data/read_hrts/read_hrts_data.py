@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 def read_sal(data_var,part_1,seq_no, time_requested_begin, time_requested_end):
 
     path = part_1+data_var+':'+seq_no
-    print(path)
+    # print(path)
     data = sal.get(path)
     time = data.dimensions[0].data
     begin_time_idx = (np.abs(time - time_requested_begin)).argmin()
     end_time_idx = (np.abs(time - time_requested_end)).argmin()
-    print(time[begin_time_idx])
+    # print(time[begin_time_idx])
     # slice data array
     sliced_data = data.data[begin_time_idx:end_time_idx]
 

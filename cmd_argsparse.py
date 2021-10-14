@@ -43,12 +43,13 @@ def parse_opt(parents=[]):
                         help="Gets the fits from Lorenzo database for plotting")
 
     
-    parser.add_argument("-hrts", dest="hets",
+    parser.add_argument("-hrts", dest="hrts",
                         action="store_true", default=False,
                         help="Gets HRTS data for fitting")
 
-
+    
     # End statement to parse the inputs
+    
     opts = parser.parse_args()
 
     return opts

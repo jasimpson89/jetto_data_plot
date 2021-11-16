@@ -8,6 +8,7 @@ import matplotlib_interface.stability_plots.j_alpha_scatter_full as j_alpha_scat
 import matplotlib_interface.stability_plots.gradient_plots as gradient_plots
 import matplotlib_interface.pedestal_database.plot_nesep_peped_fits as plot_nesep_peped_fits
 import matplotlib_interface.standard_plots.plot_jst_timetraces as plot_jst_timetraces
+import matplotlib_interface.standard_plots.plot_jsp_mishka as plot_jsp_timetraces
 import matplotlib_interface.pedestal_database.main_plot_fits_and_hrts_data as main_plot_fits_and_hrts_data
 import matplotlib_interface.pedestal_database.plot_lorenzo_fits as plot_lorenzo_fits
 """
@@ -20,8 +21,9 @@ def main(simulation_data,opts):
     print('In MATPLOTLIB controller')
     matplotlib.rcParams.update({'font.size': 14})
 
-    # STANDARD CONVERGENCE PLOTS REQUIRED TO JUDGE RUN
+    # STANDARD CONVERGENCE PLOTS REQUIRED TO JUDGE RUN , profiles + JST data
     plot_jst_timetraces.plot_jst(simulation_data)
+    plot_jsp_timetraces.plot_jsp(simulation_data)
 
 
     # Make j-alpha scatter plot

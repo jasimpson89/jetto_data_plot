@@ -18,14 +18,19 @@ def interpolate_mishka_data(path,load_jst,simulation):
     if os.path.isfile(file_path):
         mishka_data = read_mishka.read_info_file(path)
 
-        jsp = simulation['JSP']
-        # interpolate mishka_data onto jst time axis
-        jsp_on_mishka_time_axis = jsp.interp(time=mishka_data["time"])
-        jsp_on_mishka_time_axis["unstable_mode"] = mishka_data
-        # Now merge into the JST profile
-        jsp = jsp.merge(jsp_on_mishka_time_axis)
-        simulation['JSP'] = jsp
-        simulation['JSP_mishka'] = jsp_on_mishka_time_axis
+        try:
+            jsp = simulation['JSP']
+            # interpolate mishka_data onto jst time axis
+            jsp_on_mishka_time_axis = jsp.interp(time=mishka_data["time"])
+            jsp_on_mishka_time_axis["unstable_mode"] = mishka_data
+            # Now merge into the JST profile
+            jsp = jsp.merge(jsp_on_mishka_time_axis)
+            simulation['JSP'] = jsp
+            simulation['JSP_mishka'] = jsp_on_mishka_time_axis
+        except TypeError:
+            # This means there are no unstable times in the mishka output file 
+            print('WARNING: SIMULATION HAS NO UNSTABLE MODES USING LAST TIME SLICE FOR PROFILES')
+            simulation['JSP_mishka'] = jsp.isel(time=-1)
 
     else:
         # file doesn't exist
@@ -33,13 +38,23 @@ def interpolate_mishka_data(path,load_jst,simulation):
 
     if load_jst: # interpolate MISHKA data onto JST
         jst = simulation['JST']
+        
         # interpolate mishka_data onto jst time axis
-        jst_on_mishka_time_axis = jst.interp(time=mishka_data["time"])
-        jst_on_mishka_time_axis["unstable_mode"] = mishka_data
-        # Now merge into the JST profile
-        jst = jst.merge(jst_on_mishka_time_axis)
-        simulation['JST'] = jst
-        simulation['JST_mishka'] = jst_on_mishka_time_axis
+        try:
+            jst_on_mishka_time_axis = jst.interp(time=mishka_data["time"])
+            jst_on_mishka_time_axis["unstable_mode"] = mishka_data
+            # Now merge into the JST profile
+            jst = jst.merge(jst_on_mishka_time_axis)
+            simulation['JST'] = jst
+            simulation['JST_mishka'] = jst_on_mishka_time_axis
+        
+        except TypeError:
+            # This means there are no unstable times in the mishka output file so just use the standard JST
+           
+            simulation['JST_mishka'] = jst
+
+        
+        
         return simulation
 
 

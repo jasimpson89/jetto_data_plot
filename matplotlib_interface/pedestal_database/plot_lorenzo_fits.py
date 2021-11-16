@@ -38,19 +38,24 @@ def read_sal(data_var,part_1,seq_no):
         # this is a bad way of handling this
         return np.array(None), np.array(None)
 
-    ydata_1st_time = data.data[0][:]  # choose first time
+    try:
+        ydata_1st_time = data.data[0][:]  # choose first time
 
-    xdata_1st_time = data.dimensions[1].data
+        xdata_1st_time = data.dimensions[1].data
 
-    # slice y data
-    idx = (np.abs(xdata_1st_time- 1)).argmin() #only go to psi=1
+        # slice y data
+        idx = (np.abs(xdata_1st_time- 1)).argmin() #only go to psi=1
 
-    if data_var == 'NEF3':
-        return xdata_1st_time[0:], ydata_1st_time[0:]*1e19
-    elif data_var=='TEF3':
-        return xdata_1st_time[0:], ydata_1st_time[0:]*1e3
-    else:
-        return xdata_1st_time, ydata_1st_time
+        if data_var == 'NEF3':
+            return xdata_1st_time[0:], ydata_1st_time[0:]*1e19
+        elif data_var=='TEF3':
+            return xdata_1st_time[0:], ydata_1st_time[0:]*1e3
+        else:
+            return xdata_1st_time, ydata_1st_time
+    except IndexError:
+        # asking for a scalar from the PPF
+
+        return None, data.data[0]
 
 
 def plot_fits(simulations): 
@@ -67,6 +72,11 @@ def plot_fits(simulations):
     ne_axes = profiles_axes[0,1]
     ti_axes = profiles_axes[1,0]
     pe_axes = profiles_axes[1,1]
+
+    # Temporary addition for confied region plots 
+    fig_conf, confined_region_psi = plt.subplots(ncols=1,nrows=1)
+    confined_region_density_width = []
+    confined_region_density_width_nesep = []
 
     # get the fit data
     
@@ -92,6 +102,13 @@ def plot_fits(simulations):
         _, tef = read_sal('TEF3', low_gas_ppf, low_gas_ppf_seq_no)
         _, psie = read_sal('PSIE', low_gas_ppf, low_gas_ppf_seq_no)
         _, psif = read_sal('PSIF', low_gas_ppf, low_gas_ppf_seq_no)
+        _, rmid = read_sal('RMDF', low_gas_ppf, low_gas_ppf_seq_no)
+        # density pedestal height
+        _, mtanh_neped = read_sal('HN3', low_gas_ppf, low_gas_ppf_seq_no)
+        # temperature pedestal height
+        _, mtanh_teped = read_sal('HT5', low_gas_ppf, low_gas_ppf_seq_no)
+        
+        
         if nef.any() is None:
             #     error move on
             continue
@@ -100,8 +117,15 @@ def plot_fits(simulations):
         # shift data
         psif,nef,tef=shift(tef,nef,psif,te_at_sep=100)
 
-        ne_min = 2.8e19
-        ne_max = 3.2e19
+        # calculate density width within confined plasma
+        idx_neped = (np.abs(nef-(mtanh_neped*1e19))).argmin()
+        # psi width 
+        confined_region_density_width.append(psif[-1] - psif[idx_neped])
+        confined_region_density_width_nesep.append(nef[-1])
+
+        
+        ne_min = 3e19
+        ne_max = 3e19
         if nef[-1] < ne_max and nef[-1] > ne_min:
         # for the color iterator
             if i==len(cycle)-1:
@@ -111,10 +135,10 @@ def plot_fits(simulations):
             # print(i)
         #
             nesep_str = str(nef[-1])
-            te_axes.plot(psif, tef, label='Pedestal fit nesep='+nesep_str, color=cycle[i],linestyle='dotted')
-            ne_axes.plot(psif, nef, label='Pedestal fit nesep='+nesep_str, color=cycle[i], linestyle='dotted')
+            te_axes.plot(psif, tef, color=cycle[i],linestyle='dotted')
+            ne_axes.plot(psif, nef, color=cycle[i], linestyle='dotted')
             pressure =1.6E-19 * np.array(nef) * np.array(tef)
-            pe_axes.plot(psif, pressure, label='Pedestal fit nesep='+nesep_str, color=cycle[i], linestyle= 'dotted')
+            pe_axes.plot(psif, pressure, color=cycle[i], linestyle= 'dotted')
 
 
             # Plot the derivatives
@@ -124,22 +148,32 @@ def plot_fits(simulations):
             pressure = 1.6E-19 * np.array(nef) * np.array(tef)
             pef_deriv = calc_deriv(psif,pressure)
 
-            dp_dx_ax.plot(psif[0:-1], tef_deriv, label='Pedestal fit grad nesep=' + nesep_str, color=cycle[i],linestyle='dotted')
+            dp_dx_ax.plot(psif[0:-1], tef_deriv, color=cycle[i],linestyle='dotted')
 
-            dn_dx_ax.plot(psif[0:-1], nef_deriv, label='Pedestal fit grad nesep=' + nesep_str, color=cycle[i], linestyle='dotted')
+            dn_dx_ax.plot(psif[0:-1], nef_deriv, color=cycle[i], linestyle='dotted')
 
-            dt_dx_ax.plot(psif[0:-1], pef_deriv, label='Pedestal fit grad nesep=' + nesep_str, color=cycle[i],linestyle='dotted')
+            dt_dx_ax.plot(psif[0:-1], pef_deriv, color=cycle[i],linestyle='dotted')
 
-        # plot the profile gradient for the simulations
+        # plot the profile gradient for the simulations and the profiles on the 
         for simulation in simulations:
             jsp = simulation['JSP_mishka']
             jsp = jsp.isel(time=-1)
-            
+            jst = simulation["JST_mishka"].isel(time=-1)
+
+
             psif = jsp['XPSI']
             tef_deriv = calc_deriv(jsp['XPSI'],jsp['TE'])
             nef_deriv = calc_deriv(jsp['XPSI'],jsp['NE'])
             pef_deriv = calc_deriv(jsp['XPSI'],jsp['PRE'])
 
+            # Profile plots on the mtanh fits 
+            te_axes.plot(psif, jsp['TE'], label=simulation.label, color=simulation.color,linestyle=simulation.linestyle,linewidth=1.0)
+            ne_axes.plot(psif, jsp['NE'], label=simulation.label, color=simulation.color, linestyle=simulation.linestyle,linewidth=1.0)     
+            pe_axes.plot(psif, jsp['PRE'], label=simulation.label, color=simulation.color, linestyle=simulation.linestyle,linewidth=1.0)
+
+
+
+            # Gradient plots
             dp_dx_ax.plot(psif[0:-1], tef_deriv,label=simulation.label, color=simulation.color, linestyle=simulation.linestyle)
             dp_dx_ax.set_ylabel('grad(T_e)')
             
@@ -148,3 +182,14 @@ def plot_fits(simulations):
 
             dt_dx_ax.plot(psif[0:-1], pef_deriv, label=simulation.label, color=simulation.color, linestyle=simulation.linestyle)
             dt_dx_ax.set_ylabel('grad(P_e)')
+
+            # Pedestal width in psi
+            psi = jsp['XPSI'].values
+            nesep = ((jsp['NE'])[-1]).values
+            pedestal_width_psi = psi[-1] - psi[int(jst['JTOB'])]
+
+            confined_region_psi.plot(nesep,pedestal_width_psi,label=simulation.label, color=simulation.color,marker=simulation.marker)
+
+    
+    # Make a scatter plot for the confied plasma widht 
+    confined_region_psi.scatter(confined_region_density_width_nesep,confined_region_density_width,marker='o',color='b',alpha=0.5)

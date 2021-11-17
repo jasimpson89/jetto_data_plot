@@ -18,6 +18,9 @@ def main(simulation_data):
     alfm = []
     cubs = []
     for simulation in simulation_data:
+        if simulation['no_unstable_modes'] == True:
+            # break out the routine
+            return
         # jst = simulation['JST']
         # ax.scatter(jst["ALFM"].values,jst["CUBS"].values,c=jst["time"],
         #            marker=simulation.marker)

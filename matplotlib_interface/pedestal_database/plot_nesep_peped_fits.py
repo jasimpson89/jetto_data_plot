@@ -6,7 +6,7 @@ import analysis_routines.pedestal_database_reader.read_plot_samuli_data as read_
 import matplotlib.pyplot as plt
 
 def plot_exp_ped_height_width(df):
-    fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=3)
+    fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=4)
 
     # teped
     ax_nesep_peped[0,0].scatter(df.nesep, df.teped)
@@ -38,6 +38,11 @@ def plot_exp_ped_height_width(df):
     ax_nesep_peped[1,2].scatter(df.nesep, df.neped*df.plasma_volume)
     ax_nesep_peped[1,2].set_xlabel(r'$n_{e,sep} (10^{19})$')
     ax_nesep_peped[1,2].set_ylabel('Approx particle content \n'r'$n_{e,ped} * Vol_{plasma} (10^{19}$)')
+
+    # Pressure pedestal width
+    ax_nesep_peped[0,3].scatter(df.nesep, df.deltape_cm/100)
+    ax_nesep_peped[0,3].set_xlabel(r'$n_{e,sep} (10^{19})$')
+    ax_nesep_peped[0,3].set_ylabel(r'$\Delta_{pe}$ from mtanh')
 
     return ax_nesep_peped
 

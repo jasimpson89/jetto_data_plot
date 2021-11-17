@@ -15,6 +15,8 @@ Then uses the Xarray attrs method to store extra data requited for plotting
 
 def interpolate_mishka_data(path,load_jst,simulation):
     file_path = path + '/MISHKAinstabilities.info'
+    # TODO this is a work around, and ideally we just check 'JSP_mishka' entry exits
+    no_unstable_modes = False
     if os.path.isfile(file_path):
         mishka_data = read_mishka.read_info_file(path)
 
@@ -27,10 +29,12 @@ def interpolate_mishka_data(path,load_jst,simulation):
             jsp = jsp.merge(jsp_on_mishka_time_axis)
             simulation['JSP'] = jsp
             simulation['JSP_mishka'] = jsp_on_mishka_time_axis
+            simulation['no_unstable_modes'] = False
         except TypeError:
             # This means there are no unstable times in the mishka output file 
+            simulation['no_unstable_modes'] = True
             print('WARNING: SIMULATION HAS NO UNSTABLE MODES USING LAST TIME SLICE FOR PROFILES')
-            simulation['JSP_mishka'] = jsp.isel(time=-1)
+            simulation['JSP_mishka'] = jsp
 
     else:
         # file doesn't exist
@@ -47,7 +51,7 @@ def interpolate_mishka_data(path,load_jst,simulation):
             jst = jst.merge(jst_on_mishka_time_axis)
             simulation['JST'] = jst
             simulation['JST_mishka'] = jst_on_mishka_time_axis
-        
+            
         except TypeError:
             # This means there are no unstable times in the mishka output file so just use the standard JST
            
@@ -61,6 +65,7 @@ def interpolate_mishka_data(path,load_jst,simulation):
 def set_up_data_store(jetto_data, plot_label, color, marker,load_jst ,run_path, linestyle,
                       marker_edge_color='w', run_options=None):
 
+    
     jetto_data.label = plot_label
     jetto_data.load_jst = load_jst
     jetto_data.run_dir = run_path
@@ -116,7 +121,7 @@ def read_data(input_data):
 
         # finished unpacking JSON
 
-
+        
         jetto_data_plotting_dictionary = set_up_data_store(jetto_run, label,
                                                            color, marker, load,run_path,linestyle,
                                                            marker_edge_color='w', run_options=options)

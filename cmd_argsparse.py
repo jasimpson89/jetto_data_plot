@@ -47,7 +47,17 @@ def parse_opt(parents=[]):
                         action="store_true", default=False,
                         help="Gets HRTS data for fitting")
 
-    
+    parser.add_argument("-l", "--labels", dest="labels",
+                            action="store", default=None, nargs='+', type=str,
+                            help="Labels for runs")    
+
+    parser.add_argument("-s", "--simulations", dest="jetto_runs",
+                           action="store", nargs='+', type=str, default=None,
+                           help="Simulations to be plotted, assuming they are stored in "                                                                 
+                                "/commons/cmg/$USER/jetto/runs")
+
+
+
     # End statement to parse the inputs
     
     opts = parser.parse_args()

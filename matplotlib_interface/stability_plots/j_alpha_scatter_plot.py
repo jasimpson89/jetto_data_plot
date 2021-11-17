@@ -102,6 +102,10 @@ def main(simulation_data):
 
         if simulation.load_jst == True:
             mishka_data_with_jst = simulation['JST_mishka']
+            if simulation['no_unstable_modes'] == True:
+                # break out the routine
+                return
+
             if tot_plots ==1:
                 time_plot = ((mishka_data_with_jst["time"])[-1]).values
                 alfm_plot = ((mishka_data_with_jst["ALFM"])[-1]).values

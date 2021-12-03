@@ -188,6 +188,10 @@ def main(simulation_list,opts):
         ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
                                           label=simulation.label,alpha=1.0,ms=15)
 
+        ax_nesep_pedestal_parm[0, 3].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
+                                          label=simulation.label,alpha=1.0,ms=15)
+
+
         peped = (jst['TEBA'] * jst['NEBA'] * 1.6E-19)/1e3
         ax_nesep_pedestal_parm[0, 2].plot(nesep / 1e19, peped, marker=simulation.marker, color=simulation.color,
                                           label=simulation.label, alpha=1.0, ms=15)

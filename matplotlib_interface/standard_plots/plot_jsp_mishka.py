@@ -64,7 +64,7 @@ def plot_jsp(simulations):
         # Plot out kinetic profiles
         te_ax.plot(jsp['XPSI'],jsp['TE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
         ne_ax.plot(jsp['XPSI'],jsp['NE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
-        pre_ax.plot(jsp['XPSI'],jsp['NE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
+        pre_ax.plot(jsp['XPSI'],jsp['PRE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
         ti_ax.plot(jsp['XPSI'],jsp['TI'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
 
         # Plot out transport profiles

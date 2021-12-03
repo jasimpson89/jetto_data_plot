@@ -27,9 +27,9 @@ def main(simulation_data,opts):
 
 
     # Make j-alpha scatter plot
-    j_alpha_scatter_full.main(simulation_data)
+    # j_alpha_scatter_full.main(simulation_data)
     # do last because of the way I make a big axis
-    j_alpha_scatter.main(simulation_data)
+    # j_alpha_scatter.main(simulation_data)
     # Gradient plots for bootstrap current investigation
     gradient_plots.main(simulation_data)
 

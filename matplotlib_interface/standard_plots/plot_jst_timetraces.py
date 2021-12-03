@@ -49,28 +49,28 @@ def plot_jst(simulations):
         # ped_profiles_ax[1, 1].set_title('Alpha max')
         # ped_profiles_ax[1, 2].set_title('Electron pressure')
 
-        ped_profiles_ax[0, 0].plot(time, jst['NEBA'])
+        ped_profiles_ax[0, 0].plot(time, jst['NEBA'],color=simulation.color, label=simulation.label)
         ped_profiles_ax[0, 0].set_xlabel('Time (s)')
         ped_profiles_ax[0, 0].set_ylabel(r'$N_{e, ped top}$')
 
-        ped_profiles_ax[0, 1].plot(time, jst['TEBA'])
+        ped_profiles_ax[0, 1].plot(time, jst['TEBA'],color=simulation.color, label=simulation.label)
         ped_profiles_ax[0, 1].set_xlabel('Time (s)')
         ped_profiles_ax[0, 1].set_ylabel('$T_{e, ped top}$')
 
-        ped_profiles_ax[1, 0].plot(time, jst['TIBA'])
+        ped_profiles_ax[1, 0].plot(time, jst['TIBA'],color=simulation.color, label=simulation.label)
         ped_profiles_ax[1, 0].set_xlabel('Time (s)')
         ped_profiles_ax[1, 0].set_ylabel('$T_{i, ped top}$')
 
-        ped_profiles_ax[0, 2].plot(time, jst['TEBA']*jst['NEBA'])
+        ped_profiles_ax[0, 2].plot(time, jst['TEBA']*jst['NEBA'],color=simulation.color, label=simulation.label)
         ped_profiles_ax[0, 2].set_xlabel('Time (s)')
         ped_profiles_ax[0, 2].set_ylabel('$p_{e, ped top}$')
 
-        ped_profiles_ax[1, 1].plot(time, max_alpha)
+        ped_profiles_ax[1, 1].plot(time, max_alpha,color=simulation.color, label=simulation.label)
         ped_profiles_ax[1, 1].set_xlabel('Time (s)')
         ped_profiles_ax[1, 1].set_ylabel(r'$\alpha_{max}$')
 
 
-        ped_profiles_ax[1, 2].plot(time_jsp, max_current,label=simulation.label)
+        ped_profiles_ax[1, 2].plot(time_jsp, max_current,color=simulation.color, label=simulation.label)
         ped_profiles_ax[1, 2].set_xlabel('Time (s)')
         ped_profiles_ax[1, 2].set_ylabel(r'$j_{boostrap,max}$')
 

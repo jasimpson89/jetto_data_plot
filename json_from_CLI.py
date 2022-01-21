@@ -18,43 +18,44 @@ Example of a json file array format
 }
 """
 def create_json_array_from_cli(simulation_list,labels):
-    """
-    This creates the json data but just based on the command line
-    """
+  """
+  This creates the json data but just based on the command line
+  """
 
-    # Set up the date the JSON file needs
-    # TODO put this in a config file or something
-    runs = {}
-    marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
-    color = ['r', 'g', 'b', 'k', 'c','y']
-    linestyle = ['-', '-', '-', '-', '-', '-', '-']
-    for i in range(0,len(simulation_list)):
-        run_name = "run"+str(i)
-        # run_name = "run"
-        # globals
-        runs['runs'] = {}
-        runs['runs'][run_name] = {}
-        runs['runs'][run_name]["globals"] = {}
-        # TODO put this in a config file and make a command line swtich to provide a full path
-        common_run_dir = '/common/cmg/jsimpson/jetto/runs/'
-        runs['runs'][run_name]["globals"]["run_dir"] = common_run_dir+simulation_list[i]
-        runs['runs'][run_name]["globals"]["read_jst"] = 'True'
-
-        # Plot options
-        runs['runs'][run_name]["plot_options"] = {}
-
-        if labels is not None:
-            runs['runs'][run_name]["plot_options"]["label"] = labels[i]
-        else:        
-            runs['runs'][run_name]["plot_options"]["label"] = simulation_list[i]
-        
-        runs['runs'][run_name]["plot_options"]["color"] = color[i]
-        runs['runs'][run_name]["plot_options"]["marker_color"] = color[i]
-        runs['runs'][run_name]["plot_options"]["linestyle"] = linestyle[i]
-        runs['runs'][run_name]["plot_options"]["marker"] = marker[i]
+  # Set up the date the JSON file needs
+  # TODO put this in a config file or something
+  runs = {}
+  marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
+  color = ['r', 'g', 'b', 'k', 'c','y']
+  linestyle = ['-', '-', '-', '-', '-', '-', '-']
+  runs['runs'] = {}
+  for i in range(0,len(simulation_list)):
+    run_name = "run"+str(i)
+    # run_name = "run"
+    # globals
     
-    return runs
+    runs['runs'][run_name] = {}
+    runs['runs'][run_name]["globals"] = {}
+    # TODO put this in a config file and make a command line swtich to provide a full path
+    common_run_dir = '/common/cmg/jsimpson/jetto/runs/'
+    runs['runs'][run_name]["globals"]["run_dir"] = common_run_dir+simulation_list[i]
+    runs['runs'][run_name]["globals"]["read_jst"] = 'True'
 
-if __name__ == "__main__":
-    runs = create_json_array_from_cli(['test1','test2'])
-    print(runs)
+    # Plot options
+    runs['runs'][run_name]["plot_options"] = {}
+
+    if labels is not None:
+        runs['runs'][run_name]["plot_options"]["label"] = labels[i]
+    else:        
+        runs['runs'][run_name]["plot_options"]["label"] = simulation_list[i]
+    
+    runs['runs'][run_name]["plot_options"]["color"] = color[i]
+    runs['runs'][run_name]["plot_options"]["marker_color"] = color[i]
+    runs['runs'][run_name]["plot_options"]["linestyle"] = linestyle[i]
+    runs['runs'][run_name]["plot_options"]["marker"] = marker[i]
+
+  return runs
+
+# if __name__ == "__main__":
+#     runs = create_json_array_from_cli(['test1','test2'])
+#     print(runs)

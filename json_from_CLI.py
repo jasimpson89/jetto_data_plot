@@ -19,15 +19,18 @@ Example of a json file array format
 """
 def create_json_array_from_cli(simulation_list,labels):
   """
-  This creates the json data but just based on the command line
+  This creates the json data but just based on the command line input
+
+  It ouputs a json dictionary in the same format as the json input files to be consistient which can then be used in the usual parsing routines
   """
 
   # Set up the date the JSON file needs
   # TODO put this in a config file or something
   runs = {}
-  marker = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o']
-  color = ['r', 'g', 'b', 'k', 'c','y']
-  linestyle = ['-', '-', '-', '-', '-', '-', '-']
+  color = ['r', 'g', 'b', 'k', 'c', 'y', 'm','darkmagenta', 'slategray','hotpink']
+  marker = ['o']*len(color)
+
+  linestyle = ['-']*len(color)
   runs['runs'] = {}
   for i in range(0,len(simulation_list)):
     run_name = "run"+str(i)

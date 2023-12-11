@@ -72,7 +72,7 @@ def set_up_data_store(jetto_data, plot_label, color, marker,load_jst ,run_path, 
     jetto_data.marker = marker
     jetto_data.color = color
     jetto_data.linestyle = linestyle
-    jetto_data.marker_edge_color = marker_edge_color
+    jetto_data.marker_color = marker_edge_color
 
     if run_options is not None:
         if run_options["mtanh_fit_time"]:
@@ -109,9 +109,15 @@ def read_data(input_data):
         # converting to Boolean is non trival in python see - https://stackoverflow.com/questions/715417/converting-from-a-string-to-boolean-in-python
         label = run["plot_options"]["label"]
         color = run["plot_options"]["color"]
-        marker_color = run["plot_options"]["marker_color"]
+        
+        try:
+            marker_color = run["plot_options"]["marker_color"]
+        except KeyError: 
+            # The marker color might not always be gfiven so assume same as color
+            marker_color = color
         linestyle = run["plot_options"]["linestyle"]
         marker = run["plot_options"]["marker"]
+        
 
         # Some extra options that might not always be present for all cases
         if "options" in run:
@@ -124,7 +130,7 @@ def read_data(input_data):
         
         jetto_data_plotting_dictionary = set_up_data_store(jetto_run, label,
                                                            color, marker, load,run_path,linestyle,
-                                                           marker_edge_color='w', run_options=options)
+                                                           marker_edge_color=marker_color, run_options=options)
 
 
 

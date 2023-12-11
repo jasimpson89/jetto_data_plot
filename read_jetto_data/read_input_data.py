@@ -18,8 +18,13 @@ def read_data(input_file):
     mardown_string = ''
     lines = file.readlines()
     markdown_flag = False
-
-    temp_json_file = open('./temp_json.json','w')
+    try:
+        path = './temp_json.json'
+        temp_json_file = open(path,'w')
+    except PermissionError:
+        # the debugger needs whole path to work
+        path = '/home/jsimpson/work/jetto/python_script/jetto_datadashboard/temp_json.json'
+        temp_json_file = open(path,'w')
     for line in lines:
         if markdown_flag:
             mardown_string = mardown_string + line
@@ -35,11 +40,11 @@ def read_data(input_file):
     temp_json_file.close()
 
 
-    with open('./temp_json.json') as f:
+    with open(path) as f:
         input_data = json.load(f)
 
     input_data["notes"] = mardown_string
 
     # Clean up temp json file
-    os.remove("./temp_json.json")
+    os.remove(path)
     return input_data

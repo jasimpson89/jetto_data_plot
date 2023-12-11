@@ -4,9 +4,39 @@ import analysis_routines.pedestal_database_reader.read_plot_samuli_data as read_
 
 # Std imports
 import matplotlib.pyplot as plt
+import numpy as np
 
-def plot_exp_ped_height_width(df):
-    fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=4)
+def plot_exp_ped_height_width(df, opts):
+
+    if opts.nplt == False:
+        fig_nesep_peped, ax_nesep_peped = plt.subplots(nrows=2, ncols=4)
+    else:
+        ax_nesep_peped = np.ndarray(shape=(2,4),dtype=object)
+        split_top_bottom = False
+        if split_top_bottom == True:
+            fig_nesep_peped, ax_temp =  plt.subplots(ncols=4, nrows=1)
+            ax_nesep_peped[0, 0] = ax_temp[0]
+            ax_nesep_peped[0, 1] = ax_temp[1]
+            ax_nesep_peped[0, 2] = ax_temp[2]
+            ax_nesep_peped[0, 3] = ax_temp[3]
+
+            fig_nesep_peped1, ax_temp1 =  plt.subplots(ncols=4, nrows=1)
+            ax_nesep_peped[1, 0] =  ax_temp1[0]
+            ax_nesep_peped[1, 1] =  ax_temp1[1]
+            ax_nesep_peped[1, 2] =  ax_temp1[2]
+            ax_nesep_peped[1, 3] =  ax_temp1[3]
+
+        else:
+            ax_nesep_peped = np.ndarray(shape=(2,4),dtype=object)
+            fig_nesep_peped, ax_nesep_peped[0, 0]  = plt.subplots(ncols=1,nrows=1)
+            fig2, ax_nesep_peped[0,1] = plt.subplots(ncols=1, nrows=1)
+            fig3, ax_nesep_peped[0,2] = plt.subplots(ncols=1, nrows=1)
+            fig4, ax_nesep_peped[0,3] = plt.subplots(ncols=1, nrows=1)
+
+            fig1a, ax_nesep_peped[1, 0] = plt.subplots(ncols=1, nrows=1)
+            fig2a, ax_nesep_peped[1, 1] = plt.subplots(ncols=1, nrows=1)
+            fig3a, ax_nesep_peped[1, 2] = plt.subplots(ncols=1, nrows=1)
+            fig4a, ax_nesep_peped[1, 3] = plt.subplots(ncols=1, nrows=1)
 
     # teped
     ax_nesep_peped[0,0].scatter(df.nesep, df.teped)
@@ -19,17 +49,27 @@ def plot_exp_ped_height_width(df):
     ax_nesep_peped[0,1].set_ylabel(r'$n_{e,ped} (10^{19})$')
 
     # te width
-    ax_nesep_peped[1,0].scatter(df.nesep, df.deltate_cm/100)
+    if opts.x == 'r':
+        ax_nesep_peped[1,0].scatter(df.nesep, df.deltate_cm/100)
+        ax_nesep_peped[1,0].set_ylabel(r'$\Delta_{te} (m)$')
+    else:
+        ax_nesep_peped[1, 0].scatter(df.nesep, df.deltate_psi)
+        ax_nesep_peped[1, 1].set_ylabel(r'$\Delta_{te} (\psi)$')
+
     ax_nesep_peped[1,0].set_xlabel(r'$n_{e,sep} (10^{19})$')
-    ax_nesep_peped[1,0].set_ylabel(r'$\Delta_{te} (m)$')
 
     # ne width
-    ax_nesep_peped[1,1].scatter(df.nesep, df.deltane_cm/100)
+    if opts.x == 'r':
+        ax_nesep_peped[1, 1].scatter(df.nesep, df.deltane_cm / 100)
+        ax_nesep_peped[1, 1].set_ylabel(r'$\Delta_{ne} (m)$')
+    else:
+        ax_nesep_peped[1,1].scatter(df.nesep, df.deltane_psi)
+        ax_nesep_peped[1,1].set_ylabel(r'$\Delta_{ne} (\psi)$')
+
     ax_nesep_peped[1,1].set_xlabel(r'$n_{e,sep} (10^{19})$')
-    ax_nesep_peped[1,1].set_ylabel(r'$\Delta_{ne} (m)$')
 
     # pe height
-    ax_nesep_peped[0,2].scatter(df.nesep, df.peped)
+    ax_nesep_peped[0,2].scatter(df.nesep, df.peped, label = r'Exp. $p_{e,ped}$')
     ax_nesep_peped[0,2].set_xlabel(r'$n_{e,sep} (10^{19})$')
     ax_nesep_peped[0,2].set_ylabel(r'$p_{e,ped} (kPa)$')
 
@@ -40,9 +80,16 @@ def plot_exp_ped_height_width(df):
     ax_nesep_peped[1,2].set_ylabel('Approx particle content \n'r'$n_{e,ped} * Vol_{plasma} (10^{19}$)')
 
     # Pressure pedestal width
-    ax_nesep_peped[0,3].scatter(df.nesep, df.deltape_cm/100)
-    ax_nesep_peped[0,3].set_xlabel(r'$n_{e,sep} (10^{19})$')
-    ax_nesep_peped[0,3].set_ylabel(r'$\Delta_{pe}$ from mtanh')
+    if opts.x == 'r':
+        ax_nesep_peped[0,3].scatter(df.nesep, df.deltape_cm/100)
+        ax_nesep_peped[0,3].set_xlabel(r'$n_{e,sep} (10^{19})$')
+        ax_nesep_peped[0,3].set_ylabel(r'$\Delta_{pe}$ from mtanh')
+    else:
+        ax_nesep_peped[0,3].scatter(df.nesep, df.deltape_psi)
+        ax_nesep_peped[0,3].set_xlabel(r'$n_{e,sep} (10^{19})$')
+        ax_nesep_peped[0,3].set_ylabel(r'$\Delta_{pe}$ from mtanh')
+
+
 
     return ax_nesep_peped
 
@@ -62,9 +109,10 @@ def main(simulation_list,opts):
 
 
 
-    ax_nesep_pedestal_parm = plot_exp_ped_height_width(pe_nesep_exp_df)
+    ax_nesep_pedestal_parm = plot_exp_ped_height_width(pe_nesep_exp_df, opts)
 
     fig_alpha_j,[[ax_alpha,ax_j],[ax_ratio_alpha,ax_ratio_j]] = plt.subplots(nrows=2,ncols=2)
+    fig_crit_n, ax_crit_n = plt.subplots(nrows=1,ncols=1)
 
 
 
@@ -86,6 +134,11 @@ def main(simulation_list,opts):
     ax_ratio_alpha.scatter(pe_nesep_exp_stability_filter_df.nesep, alpha_crit_ratio,c=pe_nesep_exp_stability_filter_df['crit. n diam'],marker='o')
     im = ax_ratio_j.scatter(pe_nesep_exp_stability_filter_df.nesep, j_crit_ratio,c=pe_nesep_exp_stability_filter_df['crit. n diam'],marker='o')
     fig_alpha_j.colorbar(im, ax=ax_ratio_j)
+
+    peped=pe_nesep_exp_stability_filter_df['Teped [keV]']*1e3*pe_nesep_exp_stability_filter_df['neped [10^19 1m^3]']*1e19*1.6e-19
+
+    im = ax_crit_n.scatter(pe_nesep_exp_stability_filter_df.nesep, peped,c=pe_nesep_exp_stability_filter_df['crit. n raw'],marker='o')
+    fig_crit_n.colorbar(im, ax=ax_crit_n)
 
     ax_nesep_peped.set_xlim(xmin=0)
     ax_nesep_peped.set_ylim(ymin=0)
@@ -112,6 +165,9 @@ def main(simulation_list,opts):
     ax_nesep_peped.set_xlabel(r'$n_{e,sep}/n_{e,ped}$')
     ax_nesep_peped.set_ylabel(r'$P_{e,ped}$ kPA')
 
+
+    mtanh_fit_data =[]
+
     for simulation in simulation_list:
 
         # Make mtanh fits
@@ -133,14 +189,23 @@ def main(simulation_list,opts):
         nesep = ((jsp['NE'])[-1]).values
 
         if opts.mtanh == True:
-            teped, deltate, te_offset, chi_square_te, te_fit_data, te_r_end_time,te_orig_data =\
+            teped, deltate, te_offset, chi_square_te, te_fit_data, te_r_end_time,te_orig_data = \
                 mtanh_interface.fit_one_profile(simulation,opts,'TE',time)
-            neped, deltane, ne_offset, chi_square_ne, ne_fit_data, ne_r_end_time,ne_orig_data =\
+            neped, deltane, ne_offset, chi_square_ne, ne_fit_data, ne_r_end_time,ne_orig_data = \
                 mtanh_interface.fit_one_profile(simulation,opts,'NE',time)
             # its an array due to the offsets that can be used in the mtanh fit
             preped = (neped[0]*teped[0]*1.6E-19)/1e3 # kPa
             #
             nesep = ((jsp['NE'])[-1]).values
+            mtanh_fits = {}
+            mtanh_fits['teped'] = teped[0]
+            mtanh_fits['neped'] = neped[0]
+            mtanh_fits['deltate'] = deltate
+            mtanh_fits['deltane'] = deltane
+            mtanh_fits['peped'] = preped
+            mtanh_fits['nesep'] = nesep
+            mtanh_fit_data.append(mtanh_fits)
+
             ax_nesep_peped.plot(nesep / 1e19, preped, marker=simulation.marker, color=simulation.color,
                                 label=simulation.label,ms=15)
             top_barrier_idx = int(jst['JTOB'])
@@ -155,9 +220,9 @@ def main(simulation_list,opts):
             ax_nesep_pedestal_parm[0,1].plot(nesep/1e19,neped[0]/1e19,marker=simulation.marker,color=simulation.color,
                                              label=simulation.label,ms=15, alpha=0.5)
             ax_nesep_pedestal_parm[1, 0].plot(nesep/1e19, deltate, marker=simulation.marker, color=simulation.color,
-                                      label=simulation.label,ms=15, alpha=0.5)
+                                              label=simulation.label,ms=15, alpha=0.5)
             ax_nesep_pedestal_parm[1, 1].plot(nesep/1e19, deltane, marker=simulation.marker, color=simulation.color,
-                                      label=simulation.label,ms=15, alpha=0.5)
+                                              label=simulation.label,ms=15, alpha=0.5)
 
 
             # Plot fits
@@ -172,49 +237,89 @@ def main(simulation_list,opts):
         #END LOOP
 
 
+
+        if opts.europed == True:
+            neped_europed = 3.48E19
+            peped = (jst['TEBA'] * neped_europed * 1.6E-19) / 1e3
+            alpha = 0.5
+        else:
+            peped = (jst['TEBA'] * jst['NEBA'] * 1.6E-19)/1e3
+            alpha=1
+
+
         # FROM JST
-        ax_nesep_pedestal_parm[0, 0].plot(nesep / 1e19, jst['TEBA'] / 1e3, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label,alpha=1.0)
-        ax_nesep_pedestal_parm[0, 1].plot(nesep / 1e19, jst['NEBA'] / 1e19, marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label,alpha=1.0)
+        ax_nesep_pedestal_parm[0, 0].plot(nesep / 1e19, jst['TEBA'] / 1e3, marker=simulation.marker,ms=15,alpha=alpha,
+                                          markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3, label=simulation.label)
+        ax_nesep_pedestal_parm[0, 1].plot(nesep / 1e19, jst['NEBA'] / 1e19, marker=simulation.marker,ms=15, alpha=alpha,
+                                          markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3, label=simulation.label)
         # NOT SURE IF I CAN DO THIS BECAUSE OF WDITH IS APPLIED TO PRESSURE
         # i can delta(ne)=delta(te)=delta(pe)
         r = jsp['R'].values
         psi = jsp['XPSI'].values
-        pedestal_width = r[-1] - r[int(jst['JTOB'])]
-        pedestal_width_psi = psi[-1] - psi[int(jst['JTOB'])]
-        ax_nesep_pedestal_parm[1, 0].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label,alpha=1.0,ms=15)
-        ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label,alpha=1.0,ms=15)
-
-        ax_nesep_pedestal_parm[0, 3].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label,alpha=1.0,ms=15)
 
 
-        peped = (jst['TEBA'] * jst['NEBA'] * 1.6E-19)/1e3
-        ax_nesep_pedestal_parm[0, 2].plot(nesep / 1e19, peped, marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label, alpha=1.0, ms=15)
+        jtob = int(jst['JTOB'])
+        if jtob == len(jsp['XPSI']):
+            ped_pos_idx = jtob-1
+        else:
+            ped_pos_idx = jtob+1
+
+
+        # Calculate width of pedestal based on x axis which is selected by the user
+        if opts.x == 'r':
+            pedestal_width = r[-1] - r[ped_pos_idx]
+            pedestal_width_print = pedestal_width
+        else:
+            pedestal_width_psi = psi[-1] - psi[ped_pos_idx]
+            pedestal_width =  pedestal_width_psi
+            pedestal_width_print = pedestal_width_psi
+
+
+
+
+        ax_nesep_pedestal_parm[1, 0].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                          label=simulation.label,alpha=1.0,ms=15)
+        ax_nesep_pedestal_parm[1, 1].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                          label=simulation.label,alpha=1.0,ms=15)
+
+        ax_nesep_pedestal_parm[0, 3].plot(nesep / 1e19, pedestal_width, marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                          label=simulation.label,alpha=1.0,ms=15)
+
+
+
+
+        ax_nesep_pedestal_parm[0, 2].plot(nesep / 1e19, peped, marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                          label=simulation.label, alpha=alpha, ms=15)
 
         compareable_particle_content = (jst['NEBA']/1e19)*jst['VOL'] # normalise for the ped database
-        ax_nesep_pedestal_parm[1, 2].plot(nesep / 1e19,compareable_particle_content , marker=simulation.marker, color=simulation.color,
-                                          label=simulation.label, alpha=1.0, ms=15)
+        ax_nesep_pedestal_parm[1, 2].plot(nesep / 1e19,compareable_particle_content , marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                          label=simulation.label, alpha=alpha, ms=15)
 
-        ax_nesep_peped.plot((nesep/jst['NEBA']), peped, marker=simulation.marker, color=simulation.color,
-                            label=simulation.label, ms=15)
-
+        if opts.europed:
+            ax_nesep_peped.plot((nesep / neped_europed), peped, marker=simulation.marker,
+                                markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color,
+                                markeredgewidth=3,
+                                label=simulation.label, ms=15)
+        else:
+            ax_nesep_peped.plot((nesep/jst['NEBA']), peped, marker=simulation.marker, markerfacecolor=simulation.marker_color, markeredgecolor=simulation.color, markeredgewidth=3,
+                                label=simulation.label, ms=15)
 
         # Different plot
         ax_alpha.plot(nesep / 1e19, jst['ALFM'], marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label,alpha=0.4)
+                      color=simulation.color, label=simulation.label,alpha=0.4)
         ax_j.plot(nesep / 1e19, jst['CUBS'] , marker=simulation.marker,ms=15,
-                                          color=simulation.color, label=simulation.label,alpha=0.4)
+                  color=simulation.color, label=simulation.label,alpha=0.4)
 
         # legend = ax_nesep_pedestal_parm[1,1].legend()
         # legend.draggable(state=True)
 
         print("Case - ", simulation.label)
-        print('Pedestal with = ', pedestal_width_psi)
+        print('Pedestal with = ', pedestal_width_print)
 
 
-        legend = ax_nesep_peped.legend()
+        #legend = ax_nesep_peped.legend()
+
+    if opts.mtanh == True:
+        return ax_nesep_pedestal_parm[0, 0], ax_nesep_pedestal_parm[0, 1], ax_nesep_pedestal_parm[0, 2], ax_nesep_pedestal_parm[1, 0], ax_nesep_pedestal_parm[1, 1], mtanh_fit_data
+    else:
+        return ax_nesep_pedestal_parm[0, 0], ax_nesep_pedestal_parm[0, 1], ax_nesep_pedestal_parm[0, 2], ax_nesep_pedestal_parm[1, 0], ax_nesep_pedestal_parm[1, 1]

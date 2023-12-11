@@ -1,17 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
-def setup_plot_axis():
+def setup_plot_axis(option):
     # use this routine configure the axes you need and the details
-    fig_profiles, [[te_ax,ne_ax],[ti_ax,pre_ax]] = plt.subplots(ncols=2,nrows=2)
-    
+    if option == False: # nplt not triggered
+        fig_profiles, [[te_ax,ne_ax],[ti_ax,pre_ax]] = plt.subplots(ncols=2,nrows=2, sharex=True)
+        plt.subplots_adjust(top=0.896,
+        bottom=0.193,
+        left=0.193,
+        right=0.92,
+        hspace=0.443,
+        wspace=1.0)
+    else:
+        plt.rcParams.update({'figure.figsize': (4, 3)})
+        fig_profiles, te_ax = plt.subplots(ncols=1,nrows=1)
+        fig2, ne_ax= plt.subplots(ncols=1,nrows=1)
+        fig3, ti_ax= plt.subplots(ncols=1,nrows=1)
+        fig4, pre_ax= plt.subplots(ncols=1,nrows=1)
+
+
+
+
     te_ax.set_xlabel(r'$\psi_n$')
-    te_ax.set_ylabel(r'$T_e eV$')
+    te_ax.set_ylabel(r'$T_e\ (keV)$')
     
     ne_ax.set_xlabel(r'$\psi_n$')
-    ne_ax.set_ylabel(r'$n_e m^{-3}$')
+    ne_ax.set_ylabel(r'$n_e \ m^{-3}$')
 
     ti_ax.set_xlabel(r'$\psi_n$')
-    ti_ax.set_ylabel(r'$t_i eV$')
+    ti_ax.set_ylabel(r'$t_i \ (keV)$')
 
     pre_ax.set_xlabel(r'$\psi_n$')
     pre_ax.set_ylabel(r'$P_e Pa$')
@@ -36,10 +52,10 @@ def setup_plot_axis_transport():
 
 
     return fig_profiles, chi_ax,d_perp_ax,neo_ax
-def plot_jsp(simulations):
+def plot_jsp(simulations, opts):
     
     # Set up plots for kinetic profiles
-    fig_profiles, te_ax, ne_ax, ti_ax, pre_ax = setup_plot_axis()
+    fig_profiles, te_ax, ne_ax, ti_ax, pre_ax = setup_plot_axis(opts.nplt)
 
     # Set up plots for transport profiles
     fig_transport, chi_ax,d_perp_ax,neo_ax = setup_plot_axis_transport()
@@ -51,7 +67,10 @@ def plot_jsp(simulations):
 
         # Plot the position of the pedestal top, this assumes te=ne in the pedestal top positions
         jtob = int(jst['JTOB'])
-        ped_pos = jsp['XPSI'][jtob+1]
+        if jtob == len(jsp['XPSI']):
+            ped_pos = jsp['XPSI'][jtob-1]
+        else:
+            ped_pos = jsp['XPSI'][jtob+1]
         te_ax.axvline(ped_pos,linestyle=simulation.linestyle,color=simulation.color)
         ne_ax.axvline(ped_pos,linestyle=simulation.linestyle,color=simulation.color)
         pre_ax.axvline(ped_pos,linestyle=simulation.linestyle,color=simulation.color)
@@ -62,10 +81,10 @@ def plot_jsp(simulations):
 
         
         # Plot out kinetic profiles
-        te_ax.plot(jsp['XPSI'],jsp['TE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
+        te_ax.plot(jsp['XPSI'],jsp['TE']/1e3,linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
         ne_ax.plot(jsp['XPSI'],jsp['NE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
         pre_ax.plot(jsp['XPSI'],jsp['PRE'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
-        ti_ax.plot(jsp['XPSI'],jsp['TI'],linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
+        ti_ax.plot(jsp['XPSI'],jsp['TI']/1e3,linestyle=simulation.linestyle,color=simulation.color,linewidth=1,label=simulation.label)
 
         # Plot out transport profiles
         

@@ -3,20 +3,25 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+"""
+This plots fits from Lorenzo's mtanh fits from teh a csv file which I created 
 
+this csv is matched with peped v. nesep trend 
+
+"""
 
 def shift(te,ne,xaxis,te_at_sep = 100):
 
     # find the 100 eV point first
 
-    idx_at_tesep = (np.abs(te-te_at_sep).argmin())
+    idx_at_tesep = (np.abs(te-te_at_sep).argmin()) + 1 # so include the 100 eV point
     x_at_tesep = xaxis[idx_at_tesep]
 
     shifted_te_profile = te[0:idx_at_tesep]
     shifted_ne_profile = ne[0:idx_at_tesep]
     shifted_x_axis = np.linspace(0,1,len(xaxis[0:idx_at_tesep]))
-    print(len(shifted_te_profile),len(shifted_x_axis))
-    return shifted_x_axis, shifted_ne_profile,shifted_te_profile
+    # print(len(shifted_te_profile),len(shifted_x_axis))
+    return shifted_x_axis, shifted_ne_profile,shifted_te_profile, idx_at_tesep
 def calc_deriv(x,y):
     dydx = []
 
@@ -30,7 +35,7 @@ def calc_deriv(x,y):
 def read_sal(data_var,part_1,seq_no):
     # this routine is quite specific to carines data
     path = part_1+data_var+':'+seq_no
-    print(path)
+    # print(path)
     try:
         data = sal.get(path)
     except:
@@ -58,7 +63,7 @@ def read_sal(data_var,part_1,seq_no):
         return None, data.data[0]
 
 
-def plot_fits(simulations): 
+def plot_fits(simulations, opts, ne_width_ax, te_width_ax):
 
     # gradient plots
     fig_grad,grad_ax = plt.subplots(ncols=3,nrows=1)
@@ -74,8 +79,9 @@ def plot_fits(simulations):
     pe_axes = profiles_axes[1,1]
 
     # Temporary addition for confied region plots 
-    fig_conf, confined_region_psi = plt.subplots(ncols=1,nrows=1)
+    fig_conf, [confined_region_psi,confined_region_psi_te]  = plt.subplots(ncols=2,nrows=1)
     confined_region_density_width = []
+    confined_region_density_width_te = []
     confined_region_density_width_nesep = []
 
     # get the fit data
@@ -115,17 +121,32 @@ def plot_fits(simulations):
 
 
         # shift data
-        psif,nef,tef=shift(tef,nef,psif,te_at_sep=100)
-
+        psif,nef,tef, shift_idx =shift(tef,nef,psif,te_at_sep=100)
+        rshift = rmid[0:shift_idx]
         # calculate density width within confined plasma
         idx_neped = (np.abs(nef-(mtanh_neped*1e19))).argmin()
-        # psi width 
-        confined_region_density_width.append(psif[-1] - psif[idx_neped])
+        idx_teped = (np.abs(tef - (mtanh_teped * 1e3))).argmin()
+
+        if opts.x == 'psi':
+            # psi width
+            confined_region_density_width.append(psif[-1] - psif[idx_neped])
+            confined_region_density_width_te.append(psif[-1] - psif[idx_teped])
+        else:
+            confined_region_density_width.append(rshift[-1] - rshift[idx_neped])
+            confined_region_density_width_te.append(rshift[-1] - rshift[idx_teped])
+
+
         confined_region_density_width_nesep.append(nef[-1])
 
-        
-        ne_min = 3e19
-        ne_max = 3e19
+        print('#####################')
+        print('nesep = ', str(nef[-1]))
+        print('width = ', str(psif[-1] - psif[idx_neped]))
+        print('ppf - ', low_gas_ppf)
+
+        ne_min = opts.nesep_request*1e19*0.8
+        ne_max = opts.nesep_request*1e19*1.2
+        ne_min=0
+        ne_max=10e19
         if nef[-1] < ne_max and nef[-1] > ne_min:
         # for the color iterator
             if i==len(cycle)-1:
@@ -153,6 +174,8 @@ def plot_fits(simulations):
             dn_dx_ax.plot(psif[0:-1], nef_deriv, color=cycle[i], linestyle='dotted')
 
             dt_dx_ax.plot(psif[0:-1], pef_deriv, color=cycle[i],linestyle='dotted')
+
+            print('/pulse/'+str(row['shot'])+'/ppf/signal/'+user.strip()+'/'+dda+'/')
 
         # plot the profile gradient for the simulations and the profiles on the 
         for simulation in simulations:
@@ -190,6 +213,8 @@ def plot_fits(simulations):
 
             confined_region_psi.plot(nesep,pedestal_width_psi,label=simulation.label, color=simulation.color,marker=simulation.marker)
 
-    
     # Make a scatter plot for the confied plasma widht 
-    confined_region_psi.scatter(confined_region_density_width_nesep,confined_region_density_width,marker='o',color='b',alpha=0.5)
+    ne_width_ax.scatter(np.array(confined_region_density_width_nesep)/1e19,confined_region_density_width,marker='*',color='r',alpha=0.3)
+    te_width_ax.scatter(np.array(confined_region_density_width_nesep)/1e19,confined_region_density_width_te,marker='*',color='r',alpha=0.3)
+
+    return  confined_region_density_width_nesep, confined_region_density_width, confined_region_density_width_te

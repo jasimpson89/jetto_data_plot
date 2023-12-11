@@ -61,7 +61,7 @@ def plot_jst(simulations):
         ped_profiles_ax[1, 0].set_xlabel('Time (s)')
         ped_profiles_ax[1, 0].set_ylabel('$T_{i, ped top}$')
 
-        ped_profiles_ax[0, 2].plot(time, jst['TEBA']*jst['NEBA'],color=simulation.color, label=simulation.label)
+        ped_profiles_ax[0, 2].plot(time, jst['TEBA']*jst['NEBA']*1.6e-19,color=simulation.color, label=simulation.label)
         ped_profiles_ax[0, 2].set_xlabel('Time (s)')
         ped_profiles_ax[0, 2].set_ylabel('$p_{e, ped top}$')
 

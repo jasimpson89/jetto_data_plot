@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def read_samuli_data():
 
-    file = './analysis_routines/pedestal_database_reader/data/summary_sc_runs_sauter.csv'
+    file = '/home/jsimpson/work/jetto/python_script/jetto_datadashboard/analysis_routines/pedestal_database_reader/data/summary_sc_runs_sauter.csv'
     dataframe = pd.read_csv(file, skipinitialspace=True)
     return dataframe
 
@@ -30,4 +30,8 @@ def main():
     # Makes one dataframe which has the experimental data and the stabiltiy data
 
     pe_nesep_exp_stability_filter_df = pd.merge(pe_nesep_exp_df,stability_df,on=['shot'],how='inner')
+    df = pe_nesep_exp_stability_filter_df
+    print('FILTERING ON ALPAH!!!!!')
+    temp = df[(df['exp.alpha']/df['crit.alpha raw']>0.8) & (df['exp.alpha']/df['crit.alpha raw']<1.2)]
+    pe_nesep_exp_stability_filter_df = temp
     return pe_nesep_exp_df,stability_df,pe_nesep_exp_stability_filter_df

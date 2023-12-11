@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def filter():
-    dataframe = pd.read_csv('analysis_routines/pedestal_database_reader/data/filtered_2.csv',skipinitialspace=True,converters={'dda': str.strip})
+    dataframe = pd.read_csv('/home/jsimpson/work/jetto/python_script/jetto_datadashboard/analysis_routines/pedestal_database_reader/data/filtered_2.csv',skipinitialspace=True,converters={'dda': str.strip})
 
     dataframe.rename(columns={'Ip (MA)':'Ip'},inplace=True)
     dataframe.rename(columns={'B (T)':'Bt'},inplace=True)
@@ -17,6 +17,9 @@ def filter():
     dataframe.rename(columns={'Te pedestal width Rmid (cm)':'deltate_cm'},inplace=True)
     dataframe.rename(columns={'Ne pedestal width Rmid (cm)':'deltane_cm'},inplace=True)
     dataframe.rename(columns={'pe pedestal width Rmid (cm)':'deltape_cm'},inplace=True)
+    dataframe.rename(columns={'Ne pedestal width (psiN %)': 'deltane_psi'}, inplace=True)
+    dataframe.rename(columns={'Te pedestal width (psiN %)': 'deltate_psi'}, inplace=True)
+    dataframe.rename(columns={'pe pedestal width (psiN %)': 'deltape_psi'}, inplace=True)
     dataframe.rename(columns={'plasma volume (m^3)':'plasma_volume'},inplace=True)
 
     return dataframe

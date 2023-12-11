@@ -4,8 +4,9 @@ def parse_opt(parents=[]):
     # labels for plots
 
     parser.add_argument("-x", dest="x",
-                        action="store", default='R', type=str,
+                        action="store", default='psi', type=str,
                         help="Choice of x axis for the plots")
+    # in the code you use 'r' or 'psi' make this check here
 
 
     parser.add_argument("-bfgs", dest="bfgs_flag",
@@ -42,7 +43,7 @@ def parse_opt(parents=[]):
                         action="store_true", default=False,
                         help="Gets the fits from Lorenzo database for plotting")
 
-    
+
     parser.add_argument("-hrts", dest="hrts",
                         action="store_true", default=False,
                         help="Gets HRTS data for fitting")
@@ -57,9 +58,36 @@ def parse_opt(parents=[]):
                                 "/commons/cmg/$USER/jetto/runs")
 
 
+    parser.add_argument("-europed", dest="europed",
+                        action="store_true", default=False,
+                        help="Plot the europed runs ")
+
+    parser.add_argument("-nesep", dest="nesep_request",
+                        action="store", default=None, type=float,
+                        help="Choice of nesep value to plot of Lorenzo's mtanh fits")
+
+
+    parser.add_argument("-nplts", dest="nplt",
+                        action="store_true", default=False,
+                        help="Splits some of the plots into there own figures")
+
+    # specific arguement for the paper to plot a profile as subplot
+    parser.add_argument("-plot_profile", dest="plot_profile",
+                        action="store_true", default=False,
+                        help="Adds a subplot of a profile the plots produce by "
+                             "jetto_datadashboard/matplotlib_interface/pedestal_database/plot_nesep_peped_fits_for_paper.py")
 
     # End statement to parse the inputs
     
     opts = parser.parse_args()
+
+    if opts.ppf == True and opts.nesep_request == None:
+        print('Please set -nesep to plot requested nesep profile')
+        print('need to use --ppf and -nesep together')
+
+    if opts.ppf == False and isinstance(opts.nesep_request, float) == True:
+        print('Please set -ppf to plot requested nesep profile')
+        print('need to use --ppf and -nesep together')
+
 
     return opts

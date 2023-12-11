@@ -308,6 +308,7 @@ def  fit_tanh(profile,r_coord,idx_top_of_barrier,core_depth_index,opts,profile_s
     # initilase object
     posterior = fit_tanh_class(profile_data, r_end_time)
     for offset in offset_list:
+        print('Fitting profile - ', profile_switch)
         posterior.offset = offset
         posterior.bounds = [(position_min,position_max),(width_min,width_max),(height_min,height_max),(slope_min,slope_max)]
         # curve fit takes silly ordering of bounds

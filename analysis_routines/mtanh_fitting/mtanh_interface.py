@@ -21,7 +21,10 @@ def fit_one_profile(sim,opts,phys_id,time):
     jsp = (sim["JSP"]).sel(time=time,method='nearest')
     jst = (sim["JST"]).sel(time=time,method='nearest')
     profile = (jsp[phys_id]).values # basically either NE or TE
-    r_coord = (jsp["R"]).values
+    if opts.x == 'r':
+        r_coord = (jsp["R"]).values
+    elif opts.x == 'psi':
+        r_coord = (jsp["XPSI"]).values
     idx_top_of_barrier = int(jst["JTOB"]) # JETTO gives the index of the top of the pedestal
     core_depth_index = 20 # this is the index of how far to go into the core to do the linear fit guess
     profile_switch = phys_id
